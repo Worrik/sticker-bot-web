@@ -6,7 +6,7 @@ const telergamTheme = computed(() => window?.Telegram?.WebApp?.themeParams);
 watch(
   () => telergamTheme.value,
   () => {
-    if (!telergamTheme) return;
+    if (!telergamTheme.value) return;
     const theme = useTheme();
     theme.themes.value.telegramTheme = {
       dark: window?.Telegram?.WebApp?.colorScheme === "dark",
