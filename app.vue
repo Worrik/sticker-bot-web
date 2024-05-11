@@ -31,6 +31,7 @@ watch(
       copyFromTheme,
       tgTheme: telergamTheme.value,
     });
+    theme.global.name = 'telegramTheme';
   },
   { immediate: true }
 );
