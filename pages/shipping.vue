@@ -5,7 +5,7 @@ import { getWebAppInitData } from '~/utils/apiUrl';
 import { useDisplay } from 'vuetify';
 
 const router = useRouter();
-const { smAndDown } = useDisplay();
+const { mobile } = useDisplay();
 
 const cart = useState<Array<IStickerCartItem>>('cart', () => []);
 
@@ -69,7 +69,7 @@ function autocompleteMenuProps() {
     top: false,
   };
 
-  if (smAndDown.value) {
+  if (mobile.value) {
     defaultProps.maxHeight = 130;
     defaultProps.top = true;
   }
