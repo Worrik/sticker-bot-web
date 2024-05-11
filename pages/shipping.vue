@@ -10,7 +10,11 @@ const citiesSearch = useNovaPoshtaAPISearch<ICity>('Address', 'getCities');
 const postOfficesMethodProperties = computed(() => ({
   CityName: city.value?.Description,
 }));
-const postOfficesSearch = useNovaPoshtaAPISearch<ICityWarehouse>('Address', 'getWarehouses', postOfficesMethodProperties);
+const postOfficesSearch = useNovaPoshtaAPISearch<ICityWarehouse>(
+  'Address',
+  'getWarehouses',
+  postOfficesMethodProperties
+);
 
 const phone = ref<string>('');
 const name = ref<string>('');
@@ -26,7 +30,13 @@ async function intersectPostOffices(isIntersecting: boolean) {
 }
 
 async function createOrder() {
-  const stickers = cart.value.filter((item) => item.quantity > 0).map((item) => item.sticker.id);
+  const stickers = cart.value
+    .filter((item) => item.quantity > 0)
+    .map((item) => ({
+      sticker_id: item.sticker.id,
+      quantity: item.quantity,
+      paper: item.paperType,
+    }));
   await $fetch(`${apiUrl}/orders/`, {
     method: 'POST',
     headers: {
@@ -34,7 +44,7 @@ async function createOrder() {
       Authorization: window.Telegram.WebApp.initData,
     },
     body: JSON.stringify({
-      stickers: stickers_ids,
+      stickers: stickers,
       phone: phone.value,
       name: name.value,
       city: city.value?.Description,
@@ -50,19 +60,8 @@ async function createOrder() {
   <div>
     <tg-back-button @click="router.push('/stickers')" />
     <div class="pa-8">
-      <v-text-field
-        v-model="phone"
-        label="Телефон"
-        type="tel"
-        required
-        clearable
-      />
-      <v-text-field
-        v-model="name"
-        label="Прізвище та ім'я"
-        required
-        clearable
-      />
+      <v-text-field v-model="phone" label="Телефон" type="tel" required clearable />
+      <v-text-field v-model="name" label="Прізвище та ім'я" required clearable />
       <v-autocomplete
         v-model="city"
         label="Місто"
