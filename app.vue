@@ -38,18 +38,9 @@ watch(
 </script>
 
 <template>
-  <v-theme-provider :theme="telergamTheme ? 'telegramTheme' : ''" :with-background="true">
-    <v-app>
-      <NuxtLayout>
-        <NuxtPage />
-      </NuxtLayout>
-    </v-app>
-  </v-theme-provider>
+  <v-app>
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
+  </v-app>
 </template>
-
-<style lang="scss">
-html,
-body {
-  background-color: var(--tg-theme-bg-color);
-}
-</style>
