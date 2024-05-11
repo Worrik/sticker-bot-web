@@ -3,11 +3,9 @@ import type { IPage, IPaginatedDataProvider, IPaginator } from '~/models/paginat
 export function useGenericPaginatedDataProvider<T>({
   fetchItems,
   itemsPerPage = 20,
-  initialLoad = true,
 }: {
   fetchItems: (paginator: IPaginator) => Promise<IPage<T>>;
   itemsPerPage?: number;
-  initialLoad?: boolean;
 }): IPaginatedDataProvider<T> {
   const items = ref<Array<T>>([]) as Ref<Array<T>>;
   const loading = ref<boolean>(false);
@@ -15,7 +13,6 @@ export function useGenericPaginatedDataProvider<T>({
   const paginator = ref<IPaginator>({ page: 0, perPage: itemsPerPage, hasNext: true });
 
   async function loadMore() {
-    console.log('error', error.value);
     if (loading.value || !paginator.value.hasNext || error.value) return;
 
     loading.value = true;
@@ -29,14 +26,9 @@ export function useGenericPaginatedDataProvider<T>({
     } catch (e) {
       error.value = e;
       console.error(e);
-      console.log('here');
     } finally {
       loading.value = false;
     }
-  }
-
-  if (initialLoad) {
-    loadMore();
   }
 
   return reactive({
