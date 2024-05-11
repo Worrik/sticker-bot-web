@@ -81,7 +81,7 @@ async function removeSticker(stickerCartItem: IStickerCartItem) {
       await $fetch(`${apiUrl}/stickers/${stickerCartItem.sticker.id}/`, {
         method: 'DELETE',
         headers: {
-          Authorization: window.Telegram.WebApp.initData,
+          Authorization: JSON.stringify(window.Telegram.WebApp.initData),
         },
       });
     }
