@@ -26,7 +26,7 @@ async function intersectPostOffices(isIntersecting: boolean) {
 }
 
 async function createOrder() {
-  const stickers_ids = cart.value.filter((item) => item.quantity > 0).map((item) => item.sticker.id);
+  const stickers = cart.value.filter((item) => item.quantity > 0).map((item) => item.sticker.id);
   await $fetch(`${apiUrl}/orders/`, {
     method: 'POST',
     headers: {
@@ -41,6 +41,8 @@ async function createOrder() {
       warehouse: postOffice.value?.Description,
     }),
   });
+  window.Telegram.WebApp.showAlert('Замовлення успішно створено. Очікуйте підтвердження.');
+  window.Telegram.WebApp.close();
 }
 </script>
 
