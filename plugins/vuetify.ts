@@ -16,7 +16,6 @@ export default defineNuxtPlugin((app) => {
         'on-background': telegramTheme.text_color || '',
         'on-surface': telegramTheme.text_color || '',
         'on-primary': telegramTheme.button_text_color || '',
-        'on-secondary': telegramTheme.text_color || '',
       },
       variables: {},
     };
