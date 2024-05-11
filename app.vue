@@ -40,3 +40,9 @@ watch(
     </v-theme-provider>
   </v-app>
 </template>
+
+<style>
+html, body {
+  background-color: var(--tg-theme-bg-color);
+}
+</style>
