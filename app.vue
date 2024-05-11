@@ -8,6 +8,10 @@ watch(
   () => {
     if (!telergamTheme.value) return;
     const theme = useTheme();
+    const copyFromTheme =
+      window?.Telegram?.WebApp?.colorScheme === 'dark'
+        ? theme.themes.value.dark
+        : theme.themes.value.light;
     theme.themes.value.telegramTheme = {
       dark: window?.Telegram?.WebApp?.colorScheme === 'dark',
       colors: {
