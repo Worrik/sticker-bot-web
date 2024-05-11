@@ -26,6 +26,11 @@ watch(
       },
       variables: {},
     };
+    console.log({
+      theme: theme.themes.value.telegramTheme,
+      copyFromTheme,
+      tgTheme: telergamTheme.value,
+    })
   },
   { immediate: true }
 );
