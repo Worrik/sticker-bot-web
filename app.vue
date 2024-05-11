@@ -30,24 +30,25 @@ watch(
       theme: theme.themes.value.telegramTheme,
       copyFromTheme,
       tgTheme: telergamTheme.value,
-    })
+    });
   },
   { immediate: true }
 );
 </script>
 
 <template>
-  <v-app>
-    <v-theme-provider :theme="telergamTheme ? 'telegramTheme' : ''" :with-background="true">
+  <v-theme-provider :theme="telergamTheme ? 'telegramTheme' : ''" :with-background="true">
+    <v-app>
       <NuxtLayout>
         <NuxtPage />
       </NuxtLayout>
-    </v-theme-provider>
-  </v-app>
+    </v-app>
+  </v-theme-provider>
 </template>
 
 <style>
-html, body {
+html,
+body {
   background-color: var(--tg-theme-bg-color);
 }
 </style>
