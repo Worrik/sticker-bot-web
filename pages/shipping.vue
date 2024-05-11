@@ -34,13 +34,11 @@ async function createOrder() {
       Authorization: window.Telegram.WebApp.initData,
     },
     body: JSON.stringify({
-      order: {
-        stickers: stickers_ids,
-        phone: phone.value,
-        name: name.value,
-        city: city.value?.Description,
-        warehouse: postOffice.value?.Description,
-      }
+      stickers: stickers_ids,
+      phone: phone.value,
+      name: name.value,
+      city: city.value?.Description,
+      warehouse: postOffice.value?.Description,
     }),
   });
 }
