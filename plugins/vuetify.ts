@@ -12,13 +12,12 @@ export default defineNuxtPlugin((app) => {
       colors: {
         primary: telegramTheme.button_color || '',
         background: telegramTheme.bg_color || '',
-        surface: telegramTheme.bg_color || '',
         'on-background': telegramTheme.text_color || '',
-        'on-surface': telegramTheme.text_color || '',
         'on-primary': telegramTheme.button_text_color || '',
       },
       variables: {},
     };
+    console.log('customTelegramTheme', customTelegramTheme);
   }
   const vuetify = createVuetify({
     theme: {
