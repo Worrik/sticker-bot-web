@@ -31,7 +31,7 @@ watch(
       copyFromTheme,
       tgTheme: telergamTheme.value,
     });
-    theme.global.name = 'telegramTheme';
+    theme.global.name.value = 'telegramTheme';
   },
   { immediate: true }
 );
@@ -47,7 +47,7 @@ watch(
   </v-theme-provider>
 </template>
 
-<style>
+<style lang="scss">
 html,
 body {
   background-color: var(--tg-theme-bg-color);
