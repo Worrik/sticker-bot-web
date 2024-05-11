@@ -141,14 +141,16 @@ async function goToShipping() {
           </div>
         </v-row>
       </v-container>
-      <v-infinite-scroll @load="load">
-        <template #empty>
-          <div class="pa-2"></div>
-        </template>
-        <template #error>
-          <v-alert color="error" dense> Не вдалося завантажити стікери </v-alert>
-        </template>
-      </v-infinite-scroll>
+      <ClientOnly>
+        <v-infinite-scroll @load="load">
+          <template #empty>
+            <div class="pa-2"></div>
+          </template>
+          <template #error>
+            <v-alert color="error" dense> Не вдалося завантажити стікери </v-alert>
+          </template>
+        </v-infinite-scroll>
+      </ClientOnly>
     </div>
   </div>
 </template>
