@@ -2,8 +2,10 @@
 import type { ICity, ICityWarehouse } from '~/models/novaposhta';
 import type { IStickerCartItem } from '~/models/stickers';
 import { getWebAppInitData } from '~/utils/apiUrl';
+import { useDisplay } from 'vuetify';
 
 const router = useRouter();
+const { smAndDown } = useDisplay();
 
 const cart = useState<Array<IStickerCartItem>>('cart', () => []);
 
@@ -55,6 +57,24 @@ async function createOrder() {
   window.Telegram.WebApp.showAlert('Замовлення успішно створено. Очікуйте підтвердження.');
   window.Telegram.WebApp.close();
 }
+
+function autocompleteMenuProps() {
+  // default properties copied from the vuetify-autocomplete docs
+  let defaultProps = {
+    closeOnClick: false,
+    closeOnContentClick: false,
+    disableKeys: true,
+    openOnClick: false,
+    maxHeight: 304,
+    top: false,
+  };
+
+  if (smAndDown.value) {
+    defaultProps.maxHeight = 130;
+    defaultProps.top = true;
+  }
+  return defaultProps;
+}
 </script>
 
 <template>
@@ -71,6 +91,7 @@ async function createOrder() {
         no-filter
         return-object
         clearable
+        :menu-props="autocompleteMenuProps"
         @update:search="citiesSearch.search"
       >
         <template #append-item>
@@ -91,6 +112,7 @@ async function createOrder() {
         no-filter
         return-object
         clearable
+        :menu-props="autocompleteMenuProps"
         @update:search="postOfficesSearch.search"
       >
         <template #append-item>
