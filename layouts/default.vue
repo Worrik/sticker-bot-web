@@ -30,6 +30,11 @@ watch(
       },
       variables: {},
     }
+    theme.global.name = 'telegramTheme';
+    console.log({
+      tgTheme: telergamTheme.value,
+      vuetifyTheme: theme.themes.value.telegramTheme,
+    })
   },
   { immediate: true }
 );
