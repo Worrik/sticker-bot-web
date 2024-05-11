@@ -44,3 +44,10 @@ watch(
     </NuxtLayout>
   </v-app>
 </template>
+
+<style>
+html, body {
+  background-color: var(--tg-theme-bg-color) !important;
+  color: var(--tg-theme-text-color) !important;
+}
+</style>
