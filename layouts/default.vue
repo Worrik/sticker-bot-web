@@ -9,7 +9,7 @@ watch(
     if (!telergamTheme) return;
     const theme = useTheme();
     theme.themes.value.telegramTheme = {
-      dark: window.Telegram.WebApp.colorScheme === "dark",
+      dark: window?.Telegram?.WebApp?.colorScheme === "dark",
       colors: {
         primary: telergamTheme.value.button_color || '',
         background: telergamTheme.value.secondary_bg_color || '',
