@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useTheme } from 'vuetify';
 
-const telergamTheme = computed(() => window.Telegram?.WebApp?.themeParams);
+const telergamTheme = computed(() => window?.Telegram?.WebApp?.themeParams);
 
 watch(
   () => telergamTheme.value,
