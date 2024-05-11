@@ -45,9 +45,10 @@ watch(
   </v-app>
 </template>
 
-<style>
-html, body {
-  background-color: var(--tg-theme-bg-color) !important;
-  color: var(--tg-theme-text-color) !important;
+<style lang="scss">
+:root {
+  --v-theme-background: var(--tg-theme-bg-color) !important;
+  --v-theme-text-color: var(--tg-theme-text-color) !important;
+  --v-theme-surface: var(--tg-theme-bg-color) !important;
 }
 </style>
