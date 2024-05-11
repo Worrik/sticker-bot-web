@@ -35,7 +35,7 @@ watch(
 );
 </script>
 <template>
-  <v-theme-provider :theme="telergamTheme ? 'telegramTheme' : ''">
+  <v-theme-provider :theme="telergamTheme ? 'telegramTheme' : ''" :with-background="true">
     <slot />
   </v-theme-provider>
 </template>
