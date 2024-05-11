@@ -35,7 +35,7 @@ watch(
 
 <template>
   <v-card
-    width="200"
+    width="175"
     :elevation="localStickerCartItem.quantity ? 16 : 0"
     :variant="localStickerCartItem.quantity ? 'elevated' : 'flat'"
   >
