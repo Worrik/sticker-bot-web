@@ -5,5 +5,5 @@ export function getWebAppInitData(): string {
   if (initData && initData !== 'query_id') return initData;
   const hash = window.location.hash;
   if (!hash.includes('tgWebAppData=')) return '';
-  return hash.split('tgWebAppData=')[1];
+  return hash.split('tgWebAppData=')[1].split('&tgWebAppVersion')[0];
 }
