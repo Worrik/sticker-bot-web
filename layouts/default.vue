@@ -30,17 +30,12 @@ watch(
       },
       variables: {},
     }
-    theme.global.name = 'telegramTheme';
-    console.log({
-      tgTheme: telergamTheme.value,
-      vuetifyTheme: theme.themes.value.telegramTheme,
-    })
   },
   { immediate: true }
 );
 </script>
 <template>
-  <div>
+  <v-theme-provider :theme="telergamTheme ? 'telegramTheme' : ''">
     <slot />
-  </div>
+  </v-theme-provider>
 </template>
