@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { ICity, ICityWarehouse } from '~/models/novaposhta';
 import type { IStickerCartItem } from '~/models/stickers';
+import { getWebAppInitData } from '~/utils/apiUrl';
 
 const router = useRouter();
 
@@ -41,7 +42,7 @@ async function createOrder() {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: window.Telegram.WebApp.initData,
+      Authorization: getWebAppInitData(),
     },
     body: JSON.stringify({
       stickers: stickers,

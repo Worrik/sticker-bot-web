@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { IPage, IPaginator } from '~/models/pagination';
 import type { ISticker, IStickerCartItem } from '~/models/stickers';
+import { getWebAppInitData } from '~/utils/apiUrl';
 
 const router = useRouter();
 
@@ -10,7 +11,7 @@ const stickersDataProvider = useGenericPaginatedDataProvider<ISticker>({
       `${apiUrl}/stickers/?page=${paginator.page}&per_page=${paginator.perPage}`,
       {
         headers: {
-          Authorization: window.Telegram.WebApp.initData,
+          Authorization: getWebAppInitData(),
         },
       }
     );
@@ -81,7 +82,7 @@ async function removeSticker(stickerCartItem: IStickerCartItem) {
       await $fetch(`${apiUrl}/stickers/${stickerCartItem.sticker.id}/`, {
         method: 'DELETE',
         headers: {
-          Authorization: JSON.stringify(window.Telegram.WebApp.initData),
+          Authorization: getWebAppInitData(),
         },
       });
     }
