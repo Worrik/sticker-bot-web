@@ -17,7 +17,7 @@ const options = ref<Array<IStickerOption>>([
 </script>
 
 <template>
-  <v-card class="d-flex flex-row">
+  <v-card class="d-flex flex-row" variant="tonal">
     <div :style="{'width': '30vw', 'height': '30vw'}">
       <v-img class="sticker-img" :src="sticker.url"></v-img>
       <v-divider vertical></v-divider>
