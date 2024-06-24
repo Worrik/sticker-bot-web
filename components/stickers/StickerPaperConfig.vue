@@ -32,6 +32,15 @@ function addOption() {
     quantity: 1,
   });
 }
+
+watch(
+  options,
+  () => {
+    // remove option if quantity is 0
+    options.value = options.value.filter((option) => option.quantity > 0);
+  },
+  { deep: true }
+)
 </script>
 
 <template>
@@ -41,7 +50,7 @@ function addOption() {
     </div>
     <v-divider vertical></v-divider>
     <div>
-      <div v-for="option in options" :key="option.paperType" class="d-flex flex-row align-center ga-1">
+      <div v-for="option in options" :key="option.paperType" class="d-flex flex-row align-center">
         <v-select
           v-model="option.paperType"
           :items="availablePaperTypes(option)"
@@ -55,11 +64,10 @@ function addOption() {
           v-model="option.quantity"
           label="Кількість"
           type="number"
-          min="1"
+          min="0"
           max="100"
           hide-details="auto"
         ></v-text-field>
-        <v-btn icon="mdi-close" size="x-small" variant="tonal"></v-btn>
       </div>
       <v-btn
         v-if="notSelectedPaperTypes.length"
