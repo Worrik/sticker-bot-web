@@ -44,7 +44,7 @@ function removeOption(index: number) {
       <v-img class="sticker-img" :src="sticker.url"></v-img>
     </div>
     <v-divider vertical></v-divider>
-    <div class="d-flex ga-2 flex-column">
+    <div class="d-flex ga-2 flex-column w-100">
       <div
         v-for="(option, index) in options"
         :key="option.paperType"
