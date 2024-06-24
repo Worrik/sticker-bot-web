@@ -37,10 +37,11 @@ watch(
   options,
   () => {
     // remove option if quantity is 0
-    options.value = options.value.filter((option) => option.quantity > 0);
+    if (options.value.some((option) => option.quantity === 0))
+      options.value = options.value.filter((option) => option.quantity > 0);
   },
   { deep: true }
-)
+);
 </script>
 
 <template>
