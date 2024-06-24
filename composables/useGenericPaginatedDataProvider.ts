@@ -31,11 +31,19 @@ export function useGenericPaginatedDataProvider<T>({
     }
   }
 
+  function reset() {
+    items.value = [];
+    loading.value = false;
+    error.value = null;
+    paginator.value = { page: 0, perPage: itemsPerPage, hasNext: true };
+  }
+
   return reactive({
     items,
     loading,
     error,
     paginator,
     loadMore,
+    reset,
   });
 }

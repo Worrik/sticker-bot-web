@@ -12,6 +12,7 @@ export interface IPaginatedDataProvider<T> {
   error: any;
   paginator: IPaginator;
   loadMore(): Promise<void>;
+  reset(): void;
 }
 
 export interface IPaginator {

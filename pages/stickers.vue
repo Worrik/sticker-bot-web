@@ -63,14 +63,16 @@ async function removeStickers(stickers: Array<ISticker>) {
     async (ok: boolean) => {
       if (!ok) return;
       cart.value = cart.value.filter((item) => !stickers.includes(item.sticker));
-      stickers.forEach(async (sticker) => {
+      for (const sticker of stickers) {
         await $fetch(`${apiUrl}/stickers/${sticker.id}/`, {
           method: 'DELETE',
           headers: {
             Authorization: getWebAppInitData(),
           },
         });
-      });
+      }
+      stickersDataProvider.reset();
+      await stickersDataProvider.loadMore();
     }
   );
 }
