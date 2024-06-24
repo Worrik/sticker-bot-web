@@ -53,17 +53,22 @@ async function load({ done }: { done: (status: 'ok' | 'error' | 'empty') => void
   else done('empty');
 }
 
-async function removeSticker(sticker: ISticker) {
-  window.Telegram.WebApp.showConfirm('Видалити стікер?', async (ok: boolean) => {
-    if (!ok) return;
-    cart.value = cart.value.filter((item) => item.sticker.id !== sticker.id);
-    await $fetch(`${apiUrl}/stickers/${sticker.id}/`, {
-      method: 'DELETE',
-      headers: {
-        Authorization: getWebAppInitData(),
-      },
-    });
-  });
+async function removeStickers(stickers: Array<ISticker>) {
+  window.Telegram.WebApp.showConfirm(
+    'Точно видалити обрані стікери (' + stickers.length + ')?',
+    async (ok: boolean) => {
+      if (!ok) return;
+      cart.value = cart.value.filter((item) => !stickers.includes(item.sticker));
+      stickers.forEach(async (sticker) => {
+        await $fetch(`${apiUrl}/stickers/${sticker.id}/`, {
+          method: 'DELETE',
+          headers: {
+            Authorization: getWebAppInitData(),
+          },
+        });
+      });
+    }
+  );
 }
 
 async function goToShipping() {
@@ -81,9 +86,9 @@ async function goToShipping() {
           {{ stickersCount }}
         </v-chip>
         <v-btn
+          appendIcon="mdi-cog"
           variant="elevated"
           color="primary"
-          appendIcon="mdi-truck"
           @click="goToShipping"
           :disabled="stickersCount === 0"
         >
@@ -92,13 +97,14 @@ async function goToShipping() {
       </template>
     </v-app-bar>
     <div class="py-12"></div>
-    <div class="pa-4 ga-4 d-flex flex-wrap">
+    <div class="px-4 pb-4 ga-4 d-flex flex-wrap">
       <v-btn variant="tonal" color="primary" appendIcon="mdi-check"> Обрати всі </v-btn>
       <v-btn
         variant="tonal"
         color="primary"
         appendIcon="mdi-trash-can"
         :disabled="stickersCount === 0"
+        @click="removeStickers(cart.value.map((item: IStickerCartItem) => item.sticker))"
       >
         Видалити обрані
       </v-btn>
@@ -114,7 +120,6 @@ async function goToShipping() {
               :selected="isStickerSelected(sticker)"
               @addToCart="addToCart(sticker)"
               @removeFromCart="removeFromCart(sticker)"
-              @removeSticker="removeSticker(sticker)"
             />
           </div>
           <div class="d-flex justify-start flex-column px-2 ga-4">
@@ -125,7 +130,6 @@ async function goToShipping() {
               :selected="isStickerSelected(sticker)"
               @addToCart="addToCart(sticker)"
               @removeFromCart="removeFromCart(sticker)"
-              @removeSticker="removeSticker(sticker)"
             />
           </div>
         </v-row>
