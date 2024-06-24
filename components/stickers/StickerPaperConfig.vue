@@ -38,7 +38,9 @@ function removeOption(index: number) {
 }
 
 function removeIfEmpty(index: number) {
-  if (options.value[index].quantity <= 0) removeOption(index);
+  setTimeout(() => {
+    if (options.value[index].quantity <= 0) removeOption(index);
+  }, 200);
 }
 </script>
 
@@ -49,7 +51,11 @@ function removeIfEmpty(index: number) {
     </div>
     <v-divider vertical></v-divider>
     <div class="d-flex ga-2 flex-column">
-      <div v-for="(option, index) in options" :key="option.paperType" class="d-flex flex-row align-center">
+      <div
+        v-for="(option, index) in options"
+        :key="option.paperType"
+        class="d-flex flex-row align-center"
+      >
         <v-select
           v-model="option.paperType"
           :items="availablePaperTypes(option)"
@@ -71,9 +77,9 @@ function removeIfEmpty(index: number) {
       </div>
       <v-btn
         v-if="notSelectedPaperTypes.length"
+        class="w-100"
         variant="tonal"
         density="compact"
-        block
         @click="addOption"
       >
         <v-icon>mdi-plus</v-icon>
