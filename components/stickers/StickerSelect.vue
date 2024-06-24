@@ -19,6 +19,7 @@ const emits = defineEmits<Emits>();
 <template>
   <v-card
     width="150"
+    class="sticker"
     :class="{
       chosen: selected,
     }"
@@ -29,11 +30,14 @@ const emits = defineEmits<Emits>();
 </template>
 
 <style scoped>
+.sticker {
+  cursor: pointer;
+  border: 5px solid transparent;
+}
 .chosen {
   border: 5px solid var(--tg-theme-link-color);
   margin: 5px;
 }
-
 .stickers-img:active {
   transform: scale(0.9);
 }

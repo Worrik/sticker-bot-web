@@ -121,7 +121,7 @@ async function goToShipping() {
             <StickersStickerSelect
               v-for="sticker in evenCartColumn"
               :key="sticker.id"
-              :sticker="stickerCartItem"
+              :sticker="sticker"
               :selected="isStickerSelected(sticker)"
               @addToCart="addToCart(sticker)"
               @removeFromCart="removeFromCart(sticker)"
