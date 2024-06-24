@@ -44,7 +44,7 @@ watch(
 </script>
 
 <template>
-  <v-card class="d-flex flex-row pa-2 ga-2" variant="tonal">
+  <v-card class="d-flex flex-row pa-2 ga-2" variant="elevated">
     <div :style="{ width: '30vw', height: '30vw' }">
       <v-img class="sticker-img" :src="sticker.url"></v-img>
     </div>
