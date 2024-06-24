@@ -58,8 +58,7 @@ function addOption() {
           min="1"
           max="100"
         ></v-text-field>
-        <v-btn icon="mdi-close" density="compact" variant="tonal">
-          <v-icon>mdi-close</v-icon>
+        <v-btn icon="mdi-close" size="x-small" variant="tonal">
         </v-btn>
       </div>
       <v-btn v-if="notSelectedPaperTypes.length" variant="tonal" density="compact" block @click="addOption">
