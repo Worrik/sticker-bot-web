@@ -21,6 +21,10 @@ const stickersDataProvider = useGenericPaginatedDataProvider<ISticker>({
 
 const cart = useState<Array<IStickerCartItem>>('cart', () => []);
 
+const selectedStickers = computed<Array<ISticker>>(() => {
+  return cart.value.map((item) => item.sticker);
+});
+
 const oddCartColumn = computed<Array<ISticker>>(() => {
   return stickersDataProvider.items.filter((_, index) => index % 2 === 0);
 });
@@ -104,7 +108,7 @@ async function goToShipping() {
         color="primary"
         appendIcon="mdi-trash-can"
         :disabled="stickersCount === 0"
-        @click="removeStickers(cart.value.map((item: IStickerCartItem) => item.sticker))"
+        @click="removeStickers(selectedStickers)"
       >
         Видалити обрані
       </v-btn>
