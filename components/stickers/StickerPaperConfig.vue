@@ -32,16 +32,6 @@ function addOption() {
     quantity: 1,
   });
 }
-
-watch(
-  options,
-  () => {
-    // remove option if quantity is 0
-    if (options.value.some((option) => option.quantity === 0))
-      options.value = options.value.filter((option) => option.quantity > 0);
-  },
-  { deep: true }
-);
 </script>
 
 <template>
@@ -68,6 +58,7 @@ watch(
           min="0"
           max="100"
           hide-details="auto"
+          @update:modelValue="console.log($event)"
         ></v-text-field>
       </div>
       <v-btn
