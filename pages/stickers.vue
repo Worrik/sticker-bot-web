@@ -33,9 +33,7 @@ const stickersCount = computed<number>(() => {
   return cart.value.length;
 });
 
-function addToCart(sticker: ISticker) {
-
-}
+function addToCart(sticker: ISticker) {}
 
 function removeFromCart(sticker: ISticker) {}
 
@@ -85,21 +83,17 @@ async function goToShipping() {
       </template>
     </v-app-bar>
     <div class="py-12"></div>
-    <v-btn
-      variant="tonal"
-      color="primary"
-      appendIcon="mdi-check"
-    >
-      Обрати всі
-    </v-btn>
-    <v-btn
-      variant="tonal"
-      color="primary"
-      appendIcon="mdi-trash-can"
-      :disabled="stickersCount === 0"
-    >
-      Видалити обрані
-    </v-btn>
+    <div class="pa-4 ga-4 d-flex flex-wrap">
+      <v-btn variant="tonal" color="primary" appendIcon="mdi-check"> Обрати всі </v-btn>
+      <v-btn
+        variant="tonal"
+        color="primary"
+        appendIcon="mdi-trash-can"
+        :disabled="stickersCount === 0"
+      >
+        Видалити обрані
+      </v-btn>
+    </div>
     <div class="d-flex flex-wrap align-center w-100 ga-4 pb-16 flex-column">
       <v-container>
         <v-row class="justify-center flex-wrap">
@@ -108,6 +102,7 @@ async function goToShipping() {
               v-for="sticker in oddCartColumn"
               :key="sticker.id"
               :sticker="sticker"
+              :selected="cart.value.some((item: IStickerCartItem) => item.sticker.id === sticker.id)"
               @addToCart="addToCart(sticker)"
               @removeFromCart="removeFromCart(sticker)"
               @removeSticker="removeSticker(sticker)"
@@ -118,6 +113,7 @@ async function goToShipping() {
               v-for="sticker in evenCartColumn"
               :key="sticker.id"
               :sticker="stickerCartItem"
+              :selected="cart.value.some((item: IStickerCartItem) => item.sticker.id === sticker.id)"
               @addToCart="addToCart(sticker)"
               @removeFromCart="removeFromCart(sticker)"
               @removeSticker="removeSticker(sticker)"

@@ -17,7 +17,13 @@ const emits = defineEmits<Emits>();
 </script>
 
 <template>
-  <v-card width="175" @click="">
+  <v-card
+    width="150"
+    :class="{
+      chosen: selected,
+    }"
+    @click="selected ? emits('removeFromCart') : emits('addToCart')"
+  >
     <v-img class="sticker-img ma-2" :src="sticker.url"></v-img>
   </v-card>
 </template>
