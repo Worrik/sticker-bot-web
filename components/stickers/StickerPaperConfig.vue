@@ -13,6 +13,10 @@ const options = ref<Array<IStickerOption>>([
     paperType: PaperTypes.Glossy,
     quantity: 1,
   },
+  {
+    paperType: PaperTypes.Glossy,
+    quantity: 1,
+  },
 ]);
 </script>
 
@@ -23,7 +27,7 @@ const options = ref<Array<IStickerOption>>([
     </div>
     <v-divider vertical></v-divider>
     <div>
-      <div v-for="option in options" :key="option.paperType">
+      <div v-for="option in options" :key="option.paperType" class="d-flex flex-row">
         <v-select
           v-model="option.paperType"
           :items="[PaperTypes.Glossy, PaperTypes.Matte, PaperTypes.Magnetic, PaperTypes.Yellow]"
@@ -40,6 +44,9 @@ const options = ref<Array<IStickerOption>>([
           min="1"
           max="100"
         ></v-text-field>
+        <v-btn icon>
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
       </div>
     </div>
   </v-card>
