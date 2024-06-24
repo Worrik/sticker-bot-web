@@ -49,6 +49,13 @@ function removeFromCart(sticker: ISticker) {
   cart.value = cart.value.filter((item) => item.sticker.id !== sticker.id);
 }
 
+function selectAll() {
+  cart.value = stickersDataProvider.items.map((sticker) => ({
+    sticker,
+    options: [{ paperType: PaperTypes.Glossy, quantity: 1 }],
+  }));
+}
+
 function isStickerSelected(sticker: ISticker) {
   return cart.value.some((item) => item.sticker.id === sticker.id);
 }
@@ -112,6 +119,7 @@ async function goToPaperConfig() {
         color="primary"
         appendIcon="mdi-check"
         :disabled="stickersCount === stickersDataProvider.items.length"
+        @click="selectAll"
       >
         Обрати всі
       </v-btn>
