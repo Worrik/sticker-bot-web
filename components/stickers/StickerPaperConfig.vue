@@ -41,7 +41,7 @@ function addOption() {
     </div>
     <v-divider vertical></v-divider>
     <div>
-      <div v-for="option in options" :key="option.paperType" class="d-flex flex-row">
+      <div v-for="option in options" :key="option.paperType" class="d-flex flex-row align-center ga-1">
         <v-select
           v-model="option.paperType"
           :items="availablePaperTypes(option)"
@@ -58,10 +58,15 @@ function addOption() {
           min="1"
           max="100"
         ></v-text-field>
-        <v-btn icon="mdi-close" size="x-small" variant="tonal">
-        </v-btn>
+        <v-btn icon="mdi-close" size="x-small" variant="tonal"></v-btn>
       </div>
-      <v-btn v-if="notSelectedPaperTypes.length" variant="tonal" density="compact" block @click="addOption">
+      <v-btn
+        v-if="notSelectedPaperTypes.length"
+        variant="tonal"
+        density="compact"
+        block
+        @click="addOption"
+      >
         <v-icon>mdi-plus</v-icon>
       </v-btn>
     </div>
