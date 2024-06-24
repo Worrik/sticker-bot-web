@@ -13,16 +13,24 @@ const options = ref<Array<IStickerOption>>([
     paperType: PaperTypes.Glossy,
     quantity: 1,
   },
-  {
-    paperType: PaperTypes.Glossy,
-    quantity: 1,
-  },
 ]);
 
-function availablePaperTypes(option: IStickerOption) {
+const notSelectedPaperTypes = computed(() => {
   return [PaperTypes.Glossy, PaperTypes.Matte, PaperTypes.Magnetic, PaperTypes.Yellow].filter(
-    (type) => !options.value.some((option) => option.paperType === type) || option.paperType === type
+    (type) => !options.value.some((option) => option.paperType === type)
   );
+});
+
+function availablePaperTypes(option: IStickerOption) {
+  return notSelectedPaperTypes.value.concat(option.paperType);
+}
+
+function addOption() {
+  if (notSelectedPaperTypes.value.length === 0) return;
+  options.value.push({
+    paperType: notSelectedPaperTypes.value[0],
+    quantity: 1,
+  });
 }
 </script>
 
@@ -54,7 +62,7 @@ function availablePaperTypes(option: IStickerOption) {
           <v-icon>mdi-close</v-icon>
         </v-btn>
       </div>
-      <v-btn class="w-100" variant="tonal">
+      <v-btn v-if="notSelectedPaperTypes.length" class="w-100" variant="tonal">
         <v-icon>mdi-plus</v-icon>
       </v-btn>
     </div>
