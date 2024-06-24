@@ -3,8 +3,19 @@ export interface ISticker {
   url: string;
 }
 
+export enum PaperTypes {
+  Glossy = 'Глянцевий',
+  Matte = 'Матовий',
+  Yellow = 'Жовтий',
+  Magnetic = 'Магнітний',
+}
+
+export interface IStickerOption {
+  quantity: number;
+  paperType: PaperTypes;
+}
+
 export interface IStickerCartItem {
   sticker: ISticker;
-  quantity: number;
-  paperType: 'Глянцевий' | 'Матовий';
+  options: Array<IStickerOption>;
 }

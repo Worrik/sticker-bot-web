@@ -6,6 +6,7 @@ import { getWebAppInitData } from '~/utils/apiUrl';
 const router = useRouter();
 
 const stickersDataProvider = useGenericPaginatedDataProvider<ISticker>({
+  itemsPerPage: 100,
   fetchItems: async (paginator: IPaginator) => {
     return await $fetch<IPage<ISticker>>(
       `${apiUrl}/stickers/?page=${paginator.page}&per_page=${paginator.perPage}`,
@@ -23,19 +24,10 @@ const cart = useState<Array<IStickerCartItem>>('cart', () => []);
 watch(
   () => stickersDataProvider.items.length,
   () => {
-    cart.value = [
-      ...cart.value,
-      ...stickersDataProvider.items
-        .filter((sticker) => !cart.value.some((item) => item.sticker.id === sticker.id))
-        .map(
-          (sticker) =>
-            ({
-              sticker,
-              quantity: 0,
-              paperType: 'Матовий',
-            } as IStickerCartItem)
-        ),
-    ];
+    cart.value = stickersDataProvider.items.map((sticker) => ({
+      sticker,
+      options: [],
+    }));
   },
   { immediate: true }
 );
@@ -49,21 +41,14 @@ const evenCartColumn = computed<Array<IStickerCartItem>>(() => {
 });
 
 const stickersCount = computed<number>(() => {
-  return cart.value.reduce((acc, item) => acc + item.quantity, 0);
+  return cart.value.length;
 });
 
 function addToCart(id: number) {
-  const index = cart.value.findIndex((item) => item.sticker.id === id);
-  if (index === -1) return;
-  const sticker = cart.value[index];
-  sticker.quantity++;
+  
 }
 
 function removeFromCart(id: number) {
-  const index = cart.value.findIndex((item) => item.sticker.id === id);
-  if (index === -1) return;
-  const sticker = cart.value[index];
-  if (sticker.quantity > 0) sticker.quantity--;
 }
 
 async function load({ done }: { done: (status: 'ok' | 'error' | 'empty') => void }) {
@@ -97,7 +82,7 @@ async function goToShipping() {
 <template>
   <div>
     <v-app-bar>
-      <v-app-bar-title>Твої стікери</v-app-bar-title>
+      <v-app-bar-title>Обери стікери</v-app-bar-title>
       <template #append>
         <v-chip v-if="stickersCount > 0" color="primary" text-color="white" class="mr-4">
           <v-icon left>mdi-sticker</v-icon>
@@ -119,7 +104,7 @@ async function goToShipping() {
       <v-container>
         <v-row class="justify-center flex-wrap">
           <div class="d-flex justify-end flex-column px-2 ga-4">
-            <StickersSticker
+            <StickersStickerSelect
               v-for="(stickerCartItem, index) in oddCartColumn"
               :key="stickerCartItem.sticker.id"
               :stickerCartItem="stickerCartItem"
@@ -130,11 +115,10 @@ async function goToShipping() {
             />
           </div>
           <div class="d-flex justify-start flex-column px-2 ga-4">
-            <StickersSticker
+            <StickersStickerSelect
               v-for="(stickerCartItem, index) in evenCartColumn"
               :key="stickerCartItem.sticker.id"
               :stickerCartItem="stickerCartItem"
-              @update:stickerCartItem="cart[index] = $event"
               @addToCart="addToCart(stickerCartItem.sticker.id)"
               @removeFromCart="removeFromCart(stickerCartItem.sticker.id)"
               @removeSticker="removeSticker(stickerCartItem)"
