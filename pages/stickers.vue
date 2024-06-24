@@ -77,8 +77,8 @@ async function removeStickers(stickers: Array<ISticker>) {
   );
 }
 
-async function goToShipping() {
-  await router.push('/shipping');
+async function goToPaperConfig() {
+  await router.push('/paper-config');
 }
 </script>
 
@@ -92,10 +92,10 @@ async function goToShipping() {
           {{ stickersCount }}
         </v-chip>
         <v-btn
-          appendIcon="mdi-cog"
+          appendIcon="mdi-tune"
           variant="elevated"
           color="primary"
-          @click="goToShipping"
+          @click="goToPaperConfig"
           :disabled="stickersCount === 0"
         >
           Далі
