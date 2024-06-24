@@ -2,5 +2,8 @@
 </script>
 
 <template>
-  Paper config
+  <div>
+    <tg-back-button @click="router.push('/stickers')" />
+    Paper config
+  </div>
 </template>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { IPage, IPaginator } from '~/models/pagination';
-import type { ISticker, IStickerCartItem } from '~/models/stickers';
+import { PaperTypes, type ISticker, type IStickerCartItem } from '~/models/stickers';
 import { getWebAppInitData } from '~/utils/apiUrl';
 
 const router = useRouter();
@@ -39,7 +39,10 @@ const stickersCount = computed<number>(() => {
 
 function addToCart(sticker: ISticker) {
   if (isStickerSelected(sticker)) return;
-  cart.value.push({ sticker, options: [] });
+  cart.value.push({
+    sticker,
+    options: [{ paperType: PaperTypes.Glossy, quantity: 1 }],
+  });
 }
 
 function removeFromCart(sticker: ISticker) {
@@ -104,7 +107,14 @@ async function goToPaperConfig() {
     </v-app-bar>
     <div class="py-12"></div>
     <div class="px-4 pb-4 ga-4 d-flex flex-wrap">
-      <v-btn variant="tonal" color="primary" appendIcon="mdi-check"> Обрати всі </v-btn>
+      <v-btn
+        variant="tonal"
+        color="primary"
+        appendIcon="mdi-check"
+        :disabled="stickersCount === stickersDataProvider.items.length"
+      >
+        Обрати всі
+      </v-btn>
       <v-btn
         variant="tonal"
         color="primary"
