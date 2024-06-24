@@ -33,9 +33,18 @@ const stickersCount = computed<number>(() => {
   return cart.value.length;
 });
 
-function addToCart(sticker: ISticker) {}
+function addToCart(sticker: ISticker) {
+  if (isStickerSelected(sticker)) return;
+  cart.value.push({ sticker, options: [] });
+}
 
-function removeFromCart(sticker: ISticker) {}
+function removeFromCart(sticker: ISticker) {
+  cart.value = cart.value.filter((item) => item.sticker.id !== sticker.id);
+}
+
+function isStickerSelected(sticker: ISticker) {
+  return cart.value.some((item) => item.sticker.id === sticker.id);
+}
 
 async function load({ done }: { done: (status: 'ok' | 'error' | 'empty') => void }) {
   await stickersDataProvider.loadMore();
@@ -102,7 +111,7 @@ async function goToShipping() {
               v-for="sticker in oddCartColumn"
               :key="sticker.id"
               :sticker="sticker"
-              :selected="cart.value.some((item: IStickerCartItem) => item.sticker.id === sticker.id)"
+              :selected="isStickerSelected(sticker)"
               @addToCart="addToCart(sticker)"
               @removeFromCart="removeFromCart(sticker)"
               @removeSticker="removeSticker(sticker)"
@@ -113,7 +122,7 @@ async function goToShipping() {
               v-for="sticker in evenCartColumn"
               :key="sticker.id"
               :sticker="stickerCartItem"
-              :selected="cart.value.some((item: IStickerCartItem) => item.sticker.id === sticker.id)"
+              :selected="isStickerSelected(sticker)"
               @addToCart="addToCart(sticker)"
               @removeFromCart="removeFromCart(sticker)"
               @removeSticker="removeSticker(sticker)"
