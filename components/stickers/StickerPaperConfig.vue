@@ -10,6 +10,8 @@ defineProps<Props>();
 
 <template>
   <v-card class="d-flex flex-row">
-    <v-img class="sticker-img" :src="sticker.url"></v-img>
+    <div :style="{'width': '30vw', 'height': '30vw'}">
+      <v-img class="sticker-img" :src="sticker.url"></v-img>
+    </div>
   </v-card>
 </template>
