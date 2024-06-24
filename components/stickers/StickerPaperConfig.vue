@@ -24,7 +24,7 @@ const options = ref<Array<IStickerOption>>([
       <div>
         <div v-for="option in options" :key="option.paperType">
           <v-select
-            v-model="localStickerCartItem.paperType"
+            v-model="option.paperType"
             :items="[PaperTypes.Glossy, PaperTypes.Matte, PaperTypes.Magnetic, PaperTypes.Yellow]"
             label="Тип паперу"
             class="rounded px-2"
