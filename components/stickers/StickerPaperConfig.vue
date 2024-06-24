@@ -18,10 +18,16 @@ const options = ref<Array<IStickerOption>>([
     quantity: 1,
   },
 ]);
+
+function availablePaperTypes(option: IStickerOption) {
+  return [PaperTypes.Glossy, PaperTypes.Matte, PaperTypes.Magnetic, PaperTypes.Yellow].filter(
+    (type) => !options.value.some((option) => option.paperType === type) || option.paperType === type
+  );
+}
 </script>
 
 <template>
-  <v-card class="d-flex flex-row" variant="tonal">
+  <v-card class="d-flex flex-row pa-2 ga-2" variant="tonal">
     <div :style="{ width: '30vw', height: '30vw' }">
       <v-img class="sticker-img" :src="sticker.url"></v-img>
     </div>
@@ -30,7 +36,7 @@ const options = ref<Array<IStickerOption>>([
       <div v-for="option in options" :key="option.paperType" class="d-flex flex-row">
         <v-select
           v-model="option.paperType"
-          :items="[PaperTypes.Glossy, PaperTypes.Matte, PaperTypes.Magnetic, PaperTypes.Yellow]"
+          :items="availablePaperTypes(option)"
           label="Тип паперу"
           class="rounded px-2"
           variant="solo"
@@ -48,6 +54,9 @@ const options = ref<Array<IStickerOption>>([
           <v-icon>mdi-close</v-icon>
         </v-btn>
       </div>
+      <v-btn class="w-100" variant="tonal">
+        <v-icon>mdi-plus</v-icon>
+      </v-btn>
     </div>
   </v-card>
 </template>
