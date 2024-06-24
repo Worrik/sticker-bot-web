@@ -32,6 +32,14 @@ function addOption() {
     quantity: 1,
   });
 }
+
+function removeOption(index: number) {
+  options.value.splice(index, 1);
+}
+
+function removeIfEmpty(index: number) {
+  if (options.value[index].quantity <= 0) removeOption(index);
+}
 </script>
 
 <template>
@@ -41,7 +49,7 @@ function addOption() {
     </div>
     <v-divider vertical></v-divider>
     <div>
-      <div v-for="option in options" :key="option.paperType" class="d-flex flex-row align-center">
+      <div v-for="(option, index) in options" :key="option.paperType" class="d-flex flex-row align-center">
         <v-select
           v-model="option.paperType"
           :items="availablePaperTypes(option)"
@@ -58,7 +66,7 @@ function addOption() {
           min="0"
           max="100"
           hide-details="auto"
-          @update:modelValue="console.log($event)"
+          @update:modelValue="removeIfEmpty(index)"
         ></v-text-field>
       </div>
       <v-btn
