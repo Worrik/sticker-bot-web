@@ -36,12 +36,6 @@ function addOption() {
 function removeOption(index: number) {
   options.value.splice(index, 1);
 }
-
-function removeIfEmpty(index: number) {
-  setTimeout(() => {
-    if (options.value[index].quantity <= 0) removeOption(index);
-  }, 200);
-}
 </script>
 
 <template>
@@ -72,7 +66,6 @@ function removeIfEmpty(index: number) {
           min="0"
           max="100"
           hide-details="auto"
-          @update:modelValue="removeIfEmpty(index)"
         ></v-text-field>
       </div>
       <v-btn
