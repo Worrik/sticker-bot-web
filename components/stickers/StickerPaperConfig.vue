@@ -48,7 +48,7 @@ function removeIfEmpty(index: number) {
       <v-img class="sticker-img" :src="sticker.url"></v-img>
     </div>
     <v-divider vertical></v-divider>
-    <div>
+    <div class="d-flex ga-2">
       <div v-for="(option, index) in options" :key="option.paperType" class="d-flex flex-row align-center">
         <v-select
           v-model="option.paperType"
