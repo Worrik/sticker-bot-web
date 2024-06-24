@@ -48,7 +48,7 @@ function addOption() {
           label="Тип паперу"
           class="rounded px-2"
           variant="solo"
-          hide-details
+          hide-details="auto"
           flat
         ></v-select>
         <v-text-field
@@ -57,6 +57,7 @@ function addOption() {
           type="number"
           min="1"
           max="100"
+          hide-details="auto"
         ></v-text-field>
         <v-btn icon="mdi-close" size="x-small" variant="tonal"></v-btn>
       </div>
