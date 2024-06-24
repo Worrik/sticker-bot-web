@@ -46,11 +46,11 @@ async function load({ done }: { done: (status: 'ok' | 'error' | 'empty') => void
   else done('empty');
 }
 
-async function removeSticker(stickerCartItem: IStickerCartItem) {
+async function removeSticker(sticker: ISticker) {
   window.Telegram.WebApp.showConfirm('Видалити стікер?', async (ok: boolean) => {
     if (!ok) return;
-    cart.value = cart.value.filter((item) => item.sticker.id !== stickerCartItem.sticker.id);
-    await $fetch(`${apiUrl}/stickers/${stickerCartItem.sticker.id}/`, {
+    cart.value = cart.value.filter((item) => item.sticker.id !== sticker.id);
+    await $fetch(`${apiUrl}/stickers/${sticker.id}/`, {
       method: 'DELETE',
       headers: {
         Authorization: getWebAppInitData(),
@@ -86,14 +86,14 @@ async function goToShipping() {
     </v-app-bar>
     <div class="py-12"></div>
     <v-btn
-      variant="elevated"
+      variant="tonal"
       color="primary"
       appendIcon="mdi-check"
     >
       Обрати всі
     </v-btn>
     <v-btn
-      variant="elevated"
+      variant="tonal"
       color="primary"
       appendIcon="mdi-trash-can"
       :disabled="stickersCount === 0"

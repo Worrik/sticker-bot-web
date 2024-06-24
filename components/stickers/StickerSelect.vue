@@ -18,7 +18,7 @@ const emits = defineEmits<Emits>();
 
 <template>
   <v-card width="175" @click="">
-    <v-img class="sticker-img ma-2" :src="localStickerCartItem.sticker.url"></v-img>
+    <v-img class="sticker-img ma-2" :src="sticker.url"></v-img>
   </v-card>
 </template>
 
