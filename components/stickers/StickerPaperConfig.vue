@@ -62,7 +62,7 @@ function addOption() {
           <v-icon>mdi-close</v-icon>
         </v-btn>
       </div>
-      <v-btn v-if="notSelectedPaperTypes.length" class="w-100" variant="tonal">
+      <v-btn v-if="notSelectedPaperTypes.length" class="w-100" variant="tonal" @click="addOption">
         <v-icon>mdi-plus</v-icon>
       </v-btn>
     </div>
