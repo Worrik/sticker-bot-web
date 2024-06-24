@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import type { IStickerCartItem } from '~/models/stickers';
+import type { ISticker } from '~/models/stickers';
 
 export interface Props {
-  stickerCartItem: IStickerCartItem;
+  sticker: ISticker;
+  selected: boolean;
 }
 
 export interface Emits {
@@ -16,7 +17,7 @@ const emits = defineEmits<Emits>();
 </script>
 
 <template>
-  <v-card width="175">
+  <v-card width="175" @click="">
     <v-img class="sticker-img ma-2" :src="localStickerCartItem.sticker.url"></v-img>
   </v-card>
 </template>
