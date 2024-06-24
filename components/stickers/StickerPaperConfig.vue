@@ -39,6 +39,7 @@ const options = ref<Array<IStickerOption>>([
             min="1"
             max="100"
           ></v-text-field>
+        </div>
       </div>
     </div>
   </v-card>

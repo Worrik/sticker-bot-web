@@ -34,12 +34,6 @@ async function intersectPostOffices(isIntersecting: boolean) {
 
 async function createOrder() {
   const stickers = cart.value
-    .filter((item) => item.quantity > 0)
-    .map((item) => ({
-      sticker_id: item.sticker.id,
-      quantity: item.quantity,
-      paper: item.paperType,
-    }));
   await $fetch(`${apiUrl}/orders/`, {
     method: 'POST',
     headers: {
