@@ -36,7 +36,6 @@ const emits = defineEmits<Emits>();
 }
 .chosen {
   border: 5px solid var(--tg-theme-link-color);
-  margin: 5px;
 }
 .stickers-img:active {
   transform: scale(0.9);
