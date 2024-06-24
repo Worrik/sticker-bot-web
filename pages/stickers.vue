@@ -105,8 +105,8 @@ async function goToShipping() {
         <v-row class="justify-center flex-wrap">
           <div class="d-flex justify-end flex-column px-2 ga-4">
             <StickersStickerSelect
-              v-for="stickerCartItem in oddCartColumn"
-              :key="stickerCartItem.sticker.id"
+              v-for="sticker in oddCartColumn"
+              :key="sticker.id"
               :sticker="sticker"
               @addToCart="addToCart(sticker)"
               @removeFromCart="removeFromCart(sticker)"
@@ -116,7 +116,7 @@ async function goToShipping() {
           <div class="d-flex justify-start flex-column px-2 ga-4">
             <StickersStickerSelect
               v-for="sticker in evenCartColumn"
-              :key="stickerCartItem.sticker.id"
+              :key="sticker.id"
               :sticker="stickerCartItem"
               @addToCart="addToCart(sticker)"
               @removeFromCart="removeFromCart(sticker)"
