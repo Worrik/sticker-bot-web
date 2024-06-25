@@ -32,10 +32,6 @@ function addOption() {
     quantity: 1,
   });
 }
-
-function removeOption(index: number) {
-  options.value.splice(index, 1);
-}
 </script>
 
 <template>
@@ -61,14 +57,13 @@ function removeOption(index: number) {
         ></v-select>
         <v-number-input
           v-model="option.quantity"
-          control-variant="stacked"
           label="Кількість"
-          min="0"
-          max="100"
           hide-details="auto"
-          :style="{
-            'min-width': '100px !important',
-          }"
+          variant="solo"
+          inset
+          :min="0"
+          :max="100"
+          :style="{ 'min-width': '100px !important' }"
           @update:modelValue="option.quantity = parseInt($event)"
         ></v-number-input>
       </div>
