@@ -39,8 +39,8 @@ function removeOption(index: number) {
 </script>
 
 <template>
-  <v-card class="d-flex flex-row pa-2 ga-2" variant="elevated">
-    <div :style="{ width: '30vw', height: '30vw' }">
+  <v-card class="d-flex flex-row pa-1 ga-2" variant="elevated">
+    <div :style="{ width: '30vw', height: '30vw' }" class="pa-1">
       <v-img class="sticker-img" :src="sticker.url"></v-img>
     </div>
     <v-divider vertical></v-divider>
@@ -65,7 +65,6 @@ function removeOption(index: number) {
           min="0"
           max="100"
           hide-details="auto"
-          width="5"
           @update:modelValue="option.quantity = parseInt($event)"
         ></v-number-input>
       </div>
