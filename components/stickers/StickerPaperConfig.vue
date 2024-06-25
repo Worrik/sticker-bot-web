@@ -59,15 +59,15 @@ function removeOption(index: number) {
           hide-details="auto"
           flat
         ></v-select>
-        <v-text-field
+        <v-number-input
           v-model="option.quantity"
           label="Кількість"
-          type="number"
           min="0"
           max="100"
           hide-details="auto"
           width="5"
-        ></v-text-field>
+          @update:modelValue="option.quantity = parseInt($event)"
+        ></v-number-input>
       </div>
       <v-btn
         v-if="notSelectedPaperTypes.length"
