@@ -66,7 +66,7 @@ function removeOption(index: number) {
           min="0"
           max="100"
           hide-details="auto"
-          width="10"
+          width="5"
         ></v-text-field>
       </div>
       <v-btn
