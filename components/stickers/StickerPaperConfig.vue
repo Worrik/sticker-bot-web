@@ -61,6 +61,7 @@ function removeOption(index: number) {
         ></v-select>
         <v-number-input
           v-model="option.quantity"
+          control-variant="stacked"
           label="Кількість"
           min="0"
           max="100"
