@@ -24,9 +24,7 @@ const options = ref<Array<IStickerOption>>([
 ]);
 
 const notSelectedPaperTypes = computed(() => {
-  return PAPER_TYPES.filter(
-    (type) => !options.value.some((option) => option.paperType === type)
-  );
+  return PAPER_TYPES.filter((type) => !options.value.some((option) => option.paperType === type));
 });
 
 const price = computed(() => {
@@ -91,13 +89,11 @@ function addOption() {
         <v-icon>mdi-plus</v-icon>
       </v-btn>
       <v-card variant="text" class="pa-1 mt-2 d-flex justify-end">
-        <v-card-title>
-          <span v-for="(option, index) in options" :key="option.paperType">
-            {{ option.quantity }} x {{ PAPER_COSTS[option.paperType] }}
-            {{ index === options.length - 1 ? '= ' : ' + '}}
-          </span>
-          <span>{{ price }}грн.</span>
-        </v-card-title>
+        <span v-for="(option, index) in options" :key="option.paperType">
+          {{ option.quantity }} x {{ PAPER_COSTS[option.paperType] }}
+          {{ index === options.length - 1 ? '= ' : ' + ' }}
+        </span>
+        <span>{{ price }}грн.</span>
       </v-card>
     </div>
   </v-card>
