@@ -90,7 +90,7 @@ function addOption() {
       >
         <v-icon>mdi-plus</v-icon>
       </v-btn>
-      <v-card>
+      <v-card variant="tonal" class="pa-1 mt-2 justify-end">
         <span v-for="(option, index) in options" :key="option.paperType">
           {{ option.quantity }} * {{ PAPER_COSTS[option.paperType] }}
           {{ index === options.length - 1 ? '=' : ' + '}}
