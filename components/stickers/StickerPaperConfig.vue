@@ -66,6 +66,7 @@ function removeOption(index: number) {
           min="0"
           max="100"
           hide-details="auto"
+          width="50"
           @update:modelValue="option.quantity = parseInt($event)"
         ></v-number-input>
       </div>
