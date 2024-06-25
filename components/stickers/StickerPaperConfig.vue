@@ -90,7 +90,7 @@ function addOption() {
       </v-btn>
       <v-card variant="text" class="pa-1 mt-2 d-flex justify-end flex-wrap">
         <span v-for="(option, index) in options" :key="option.paperType" class="text-no-wrap">
-          {{ option.quantity }} x {{ PAPER_COSTS[option.paperType] }}
+          {{ ' ' + option.quantity }} x {{ PAPER_COSTS[option.paperType] }}
           {{ index === options.length - 1 ? '= ' : ' + ' }}
         </span>
         <span>{{ price }}грн.</span>
