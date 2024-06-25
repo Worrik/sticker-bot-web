@@ -50,13 +50,13 @@ function addOption() {
           v-model="option.paperType"
           :items="availablePaperTypes(option)"
           label="Тип паперу"
-          class="rounded px-2"
           variant="solo"
           hide-details="auto"
           flat
         ></v-select>
         <v-number-input
           v-model="option.quantity"
+          control-variant="stacked"
           label="Кількість"
           hide-details="auto"
           variant="solo"
@@ -64,7 +64,6 @@ function addOption() {
           inset
           :min="0"
           :max="100"
-          :style="{ 'min-width': '100px !important' }"
           @update:modelValue="option.quantity = parseInt($event)"
         ></v-number-input>
       </div>
