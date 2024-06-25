@@ -8,6 +8,14 @@ export interface Props {
 
 defineProps<Props>();
 
+const PAPER_TYPES = [PaperTypes.Glossy, PaperTypes.Matte, PaperTypes.Magnetic, PaperTypes.Yellow];
+const PAPER_COSTS = {
+  [PaperTypes.Glossy]: 15,
+  [PaperTypes.Matte]: 15,
+  [PaperTypes.Magnetic]: 60,
+  [PaperTypes.Yellow]: 10,
+};
+
 const options = ref<Array<IStickerOption>>([
   {
     paperType: PaperTypes.Glossy,
@@ -16,9 +24,15 @@ const options = ref<Array<IStickerOption>>([
 ]);
 
 const notSelectedPaperTypes = computed(() => {
-  return [PaperTypes.Glossy, PaperTypes.Matte, PaperTypes.Magnetic, PaperTypes.Yellow].filter(
+  return PAPER_TYPES.filter(
     (type) => !options.value.some((option) => option.paperType === type)
   );
+});
+
+const price = computed(() => {
+  return options.value.reduce((acc, option) => {
+    return acc + option.quantity * PAPER_COSTS[option.paperType];
+  }, 0);
 });
 
 function availablePaperTypes(option: IStickerOption) {
@@ -76,6 +90,13 @@ function addOption() {
       >
         <v-icon>mdi-plus</v-icon>
       </v-btn>
+      <v-card>
+        <span v-for="(option, index) in options" :key="option.paperType">
+          {{ option.quantity }} * {{ PAPER_COSTS[option.paperType] }}
+          {{ index === options.length - 1 ? '=' : ' + '}}
+        </span>
+        <span>{{ price }}</span>
+      </v-card>
     </div>
   </v-card>
 </template>
