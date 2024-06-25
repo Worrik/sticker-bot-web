@@ -60,6 +60,7 @@ function addOption() {
           label="Кількість"
           hide-details="auto"
           variant="solo"
+          flat
           inset
           :min="0"
           :max="100"
