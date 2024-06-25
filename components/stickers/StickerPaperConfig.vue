@@ -94,9 +94,9 @@ function addOption() {
         <v-card-title>
           <span v-for="(option, index) in options" :key="option.paperType">
             {{ option.quantity }} x {{ PAPER_COSTS[option.paperType] }}
-            {{ index === options.length - 1 ? '=' : ' + '}}
+            {{ index === options.length - 1 ? '= ' : ' + '}}
           </span>
-          <span>{{ price }}</span>
+          <span>{{ price }}грн.</span>
         </v-card-title>
       </v-card>
     </div>
