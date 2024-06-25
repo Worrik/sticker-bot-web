@@ -2,6 +2,7 @@ import '@mdi/font/css/materialdesignicons.css'
 
 import 'vuetify/styles'
 import { createVuetify } from 'vuetify'
+import { VNumberInput } from 'vuetify/labs/VNumberInput'
 
 export default defineNuxtPlugin((app) => {
   const telegramTheme = window?.Telegram?.WebApp?.themeParams;
@@ -18,7 +19,6 @@ export default defineNuxtPlugin((app) => {
       },
       variables: {},
     };
-    console.log('customTelegramTheme', customTelegramTheme)
   }
   const vuetify = createVuetify({
     theme: {
@@ -26,6 +26,9 @@ export default defineNuxtPlugin((app) => {
       themes: {
         customTelegramTheme,
       }
+    },
+    components: {
+      VNumberInput,
     }
   })
   app.vueApp.use(vuetify)
