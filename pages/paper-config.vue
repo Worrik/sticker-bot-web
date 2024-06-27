@@ -25,8 +25,8 @@ async function createOrder() {
           paper: option.paperType,
           quantity: option.quantity,
         };
-      });
-    }
+      }),
+    };
   });
   await $fetch(`${apiUrl}/orders/`, {
     method: 'POST',
