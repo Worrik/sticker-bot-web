@@ -35,6 +35,12 @@ const price = computed(() => {
   }, 0);
 });
 
+const optionsSumText = computed(() => {
+  return localOptions.value
+    .map((option) => `${option.quantity} x ${PAPER_COSTS[option.paperType]}`)
+    .join(' + ') + ' = ' + price.value + 'грн.';
+});
+
 function availablePaperTypes(option: IStickerOption) {
   return notSelectedPaperTypes.value.concat(option.paperType);
 }
@@ -91,10 +97,7 @@ function addOption() {
         <v-icon>mdi-plus</v-icon>
       </v-btn>
       <v-card variant="text" class="pa-1 mt-2 d-flex justify-end flex-wrap">
-        <span v-for="(option, index) in localOptions" :key="option.paperType" class="text-no-wrap"
-          >{{ ' ' + option.quantity }} x {{ PAPER_COSTS[option.paperType]
-          }}{{ index === localOptions.length - 1 ? ' = ' : ' + ' }}</span
-        ><span>{{ ' ' + price }}грн.</span>
+        ><span>{{ optionsSumText }}</span>
       </v-card>
     </div>
   </v-card>
