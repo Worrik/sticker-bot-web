@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { ISticker, IStickerOption } from '~/models/stickers';
-import { PaperTypes } from '~/models/stickers';
+import { PaperTypes, PAPER_COSTS } from '~/models/stickers';
 
 export interface Props {
   sticker: ISticker;
@@ -15,12 +15,6 @@ const props = defineProps<Props>();
 const emits = defineEmits<Emits>();
 
 const PAPER_TYPES = [PaperTypes.Glossy, PaperTypes.Matte, PaperTypes.Magnetic, PaperTypes.Yellow];
-const PAPER_COSTS = {
-  [PaperTypes.Glossy]: 15,
-  [PaperTypes.Matte]: 15,
-  [PaperTypes.Magnetic]: 60,
-  [PaperTypes.Yellow]: 10,
-};
 
 const localOptions = computed<Array<IStickerOption>>({
   get: () => props.options,
@@ -30,7 +24,9 @@ const localOptions = computed<Array<IStickerOption>>({
 });
 
 const notSelectedPaperTypes = computed(() => {
-  return PAPER_TYPES.filter((type) => !localOptions.value.some((option) => option.paperType === type));
+  return PAPER_TYPES.filter(
+    (type) => !localOptions.value.some((option) => option.paperType === type)
+  );
 });
 
 const price = computed(() => {

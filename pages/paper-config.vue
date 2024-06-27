@@ -1,12 +1,23 @@
 <script setup lang="ts">
-import type { IStickerCartItem } from '~/models/stickers';
+import { PAPER_COSTS, type IStickerCartItem } from '~/models/stickers';
 
 const router = useRouter();
 
 const cart = useState<Array<IStickerCartItem>>('cart', () => []);
 
+const orderSumPrice = computed(() => {
+  return cart.value.reduce((acc, stickerItem) => {
+    return (
+      acc +
+      stickerItem.options.reduce((acc, option) => {
+        return acc + option.quantity * PAPER_COSTS[option.paperType];
+      }, 0)
+    );
+  }, 0);
+});
+
 async function createOrder() {
-  const stickers = cart.value
+  const stickers = cart.value;
   await $fetch(`${apiUrl}/orders/`, {
     method: 'POST',
     headers: {
@@ -28,11 +39,11 @@ async function createOrder() {
       <StickersStickerPaperConfig
         v-for="stickerItem in cart"
         :key="stickerItem.sticker.id"
-        :sticker="stickerItem.sticker"
+        v-model:sticker="stickerItem.sticker"
         :options="stickerItem.options"
       />
     </div>
     <tg-back-button @click="router.push('/stickers')" />
-    <tg-main-button text="Підтвердити замовлення" @click="" />
+    <tg-main-button :text="`Підтвердити замовлення ${orderSumPrice}`" @click="createOrder" />
   </div>
 </template>
