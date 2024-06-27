@@ -4,9 +4,15 @@ import { PaperTypes } from '~/models/stickers';
 
 export interface Props {
   sticker: ISticker;
+  options: Array<IStickerOption>;
 }
 
-defineProps<Props>();
+export interface Emits {
+  (event: 'update:options', value: Array<IStickerOption>): void;
+}
+
+const props = defineProps<Props>();
+const emits = defineEmits<Emits>();
 
 const PAPER_TYPES = [PaperTypes.Glossy, PaperTypes.Matte, PaperTypes.Magnetic, PaperTypes.Yellow];
 const PAPER_COSTS = {
@@ -16,19 +22,19 @@ const PAPER_COSTS = {
   [PaperTypes.Yellow]: 10,
 };
 
-const options = ref<Array<IStickerOption>>([
-  {
-    paperType: PaperTypes.Glossy,
-    quantity: 1,
+const localOptions = computed<Array<IStickerOption>>({
+  get: () => props.options,
+  set: (value) => {
+    emits('update:options', value);
   },
-]);
+});
 
 const notSelectedPaperTypes = computed(() => {
-  return PAPER_TYPES.filter((type) => !options.value.some((option) => option.paperType === type));
+  return PAPER_TYPES.filter((type) => !localOptions.value.some((option) => option.paperType === type));
 });
 
 const price = computed(() => {
-  return options.value.reduce((acc, option) => {
+  return localOptions.value.reduce((acc, option) => {
     return acc + option.quantity * PAPER_COSTS[option.paperType];
   }, 0);
 });
@@ -39,7 +45,7 @@ function availablePaperTypes(option: IStickerOption) {
 
 function addOption() {
   if (notSelectedPaperTypes.value.length === 0) return;
-  options.value.push({
+  localOptions.value.push({
     paperType: notSelectedPaperTypes.value[0],
     quantity: 1,
   });
@@ -54,7 +60,7 @@ function addOption() {
     <v-divider vertical></v-divider>
     <div class="d-flex ga-2 flex-column w-100">
       <div
-        v-for="(option, index) in options"
+        v-for="(option, index) in localOptions"
         :key="option.paperType"
         class="d-flex flex-row align-center"
       >
@@ -89,9 +95,9 @@ function addOption() {
         <v-icon>mdi-plus</v-icon>
       </v-btn>
       <v-card variant="text" class="pa-1 mt-2 d-flex justify-end flex-wrap">
-        <span v-for="(option, index) in options" :key="option.paperType" class="text-no-wrap">
+        <span v-for="(option, index) in localOptions" :key="option.paperType" class="text-no-wrap">
           {{ ' ' + option.quantity }} x {{ PAPER_COSTS[option.paperType] }}
-          {{ index === options.length - 1 ? '= ' : ' + ' }}
+          {{ index === localOptions.length - 1 ? '= ' : ' + ' }}
         </span>
         <span>{{ price }}грн.</span>
       </v-card>
