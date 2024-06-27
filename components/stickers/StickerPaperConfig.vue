@@ -97,7 +97,7 @@ function addOption() {
         <v-icon>mdi-plus</v-icon>
       </v-btn>
       <v-card variant="text" class="pa-1 mt-2 d-flex justify-end flex-wrap">
-        ><span>{{ optionsSumText }}</span>
+        <span>{{ optionsSumText }}</span>
       </v-card>
     </div>
   </v-card>
