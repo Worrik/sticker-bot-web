@@ -91,11 +91,11 @@ function addOption() {
         <v-icon>mdi-plus</v-icon>
       </v-btn>
       <v-card variant="text" class="pa-1 mt-2 d-flex justify-end flex-wrap">
-        <span v-for="(option, index) in localOptions" :key="option.paperType" class="text-no-wrap">
-          {{ ' ' + option.quantity }} x {{ PAPER_COSTS[option.paperType] }}
-          {{ index === localOptions.length - 1 ? '= ' : ' + ' }}
-        </span>
-        <span>{{ price }}грн.</span>
+        <span v-for="(option, index) in localOptions" :key="option.paperType" class="text-no-wrap"
+          >{{ ' ' + option.quantity }} x {{ PAPER_COSTS[option.paperType]
+          }}{{ index === localOptions.length - 1 ? '= ' : ' + ' }}</span
+        >
+        <span>{{ ' ' + price }}грн.</span>
       </v-card>
     </div>
   </v-card>

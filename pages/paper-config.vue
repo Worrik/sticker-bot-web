@@ -17,7 +17,17 @@ const orderSumPrice = computed(() => {
 });
 
 async function createOrder() {
-  const stickers = cart.value;
+  const stickers = cart.value.map((stickerItem) => {
+    return {
+      sticker_id: stickerItem.sticker.id,
+      options: stickerItem.options.map((option) => {
+        return {
+          paper: option.paperType,
+          quantity: option.quantity,
+        };
+      });
+    }
+  });
   await $fetch(`${apiUrl}/orders/`, {
     method: 'POST',
     headers: {
@@ -44,6 +54,6 @@ async function createOrder() {
       />
     </div>
     <tg-back-button @click="router.push('/stickers')" />
-    <tg-main-button :text="`Підтвердити замовлення ${orderSumPrice}`" @click="createOrder" />
+    <tg-main-button :text="`Підтвердити замовлення (${orderSumPrice} грн.)`" @click="createOrder" />
   </div>
 </template>
