@@ -5,8 +5,20 @@ const router = useRouter();
 
 const cart = useState<Array<IStickerCartItem>>('cart', () => []);
 
-async function goToCheckout() {
-  router.push('/checkout');
+async function createOrder() {
+  const stickers = cart.value
+  await $fetch(`${apiUrl}/orders/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: getWebAppInitData(),
+    },
+    body: JSON.stringify({
+      stickers: stickers,
+    }),
+  });
+  window.Telegram.WebApp.showAlert('Замовлення успішно створено. Очікуйте підтвердження.');
+  window.Telegram.WebApp.close();
 }
 </script>
 
@@ -21,6 +33,6 @@ async function goToCheckout() {
       />
     </div>
     <tg-back-button @click="router.push('/stickers')" />
-    <tg-main-button text="Перейти до оплати" @click="" />
+    <tg-main-button text="Підтвердити замовлення" @click="" />
   </div>
 </template>
