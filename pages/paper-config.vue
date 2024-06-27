@@ -54,6 +54,7 @@ async function createOrder() {
         </v-chip>
       </template>
     </v-app-bar>
+    <div class="py-12"></div>
     <div class="pa-4">
       <div class="d-flex flex-column ga-4">
         <StickersStickerPaperConfig
