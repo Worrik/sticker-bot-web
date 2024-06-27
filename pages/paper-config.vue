@@ -49,7 +49,6 @@ async function createOrder() {
       <v-app-bar-title>Обери стікери</v-app-bar-title>
       <template #append>
         <v-chip :color="orderSumPrice > 0 ? 'primary' : 'grey'" text-color="white" class="mr-4">
-          <v-icon left>mdi-sticker</v-icon>
           ₴ {{ orderSumPrice }}
         </v-chip>
       </template>
