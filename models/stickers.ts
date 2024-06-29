@@ -21,8 +21,8 @@ export interface IStickerCartItem {
 }
 
 export const PAPER_COSTS = {
-  [PaperTypes.Glossy]: 15,
-  [PaperTypes.Matte]: 15,
-  [PaperTypes.Magnetic]: 60,
-  [PaperTypes.Yellow]: 10,
+  [PaperTypes.Glossy]: 10,
+  [PaperTypes.Matte]: 10,
+  [PaperTypes.Magnetic]: 50,
+  [PaperTypes.Yellow]: 8,
 };
