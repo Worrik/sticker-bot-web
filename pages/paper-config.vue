@@ -65,7 +65,7 @@ async function createOrder() {
           :options="stickerItem.options"
         />
       </div>
-      <v-alert text="Доставка по Україні - 60 грн." type="info" variant="tonal"></v-alert>
+      <v-alert text="Доставка по Україні - 60 грн." type="info" variant="tonal" class="mt-4"></v-alert>
     </div>
     <tg-back-button @click="router.push('/stickers')" />
     <tg-main-button
