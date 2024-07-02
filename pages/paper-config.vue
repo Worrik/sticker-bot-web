@@ -6,14 +6,16 @@ const router = useRouter();
 const cart = useState<Array<IStickerCartItem>>('cart', () => []);
 
 const orderSumPrice = computed(() => {
-  return cart.value.reduce((acc, stickerItem) => {
-    return (
-      acc +
-      stickerItem.options.reduce((acc, option) => {
-        return acc + option.quantity * PAPER_COSTS[option.paperType];
-      }, 0)
-    );
-  }, 0);
+  return (
+    cart.value.reduce((acc, stickerItem) => {
+      return (
+        acc +
+        stickerItem.options.reduce((acc, option) => {
+          return acc + option.quantity * PAPER_COSTS[option.paperType];
+        }, 0)
+      );
+    }, 0) + 60
+  );
 });
 
 async function createOrder() {
@@ -63,12 +65,13 @@ async function createOrder() {
           :options="stickerItem.options"
         />
       </div>
-      <tg-back-button @click="router.push('/stickers')" />
-      <tg-main-button
-        v-if="orderSumPrice > 0"
-        :text="`Підтвердити замовлення (${orderSumPrice} грн.)`"
-        @click="createOrder"
-      />
+      <v-alert text="Доставка по Україні - 60 грн." type="info" variant="tonal"></v-alert>
     </div>
+    <tg-back-button @click="router.push('/stickers')" />
+    <tg-main-button
+      v-if="orderSumPrice > 0"
+      :text="`Підтвердити замовлення (${orderSumPrice} грн.)`"
+      @click="createOrder"
+    />
   </div>
 </template>
