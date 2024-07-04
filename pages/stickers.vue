@@ -155,6 +155,27 @@ async function goToPaperConfig() {
               @addToCart="addToCart(sticker)"
               @removeFromCart="removeFromCart(sticker)"
             />
+            <v-alert
+              v-if="stickersDataProvider.error"
+              border="top"
+              type="error"
+              variant="outlined"
+              prominent
+            >
+              <template #title>Щось зламалось.. 😔</template>
+            </v-alert>
+            <v-alert
+              v-else-if="stickersDataProvider.items.length === 0"
+              border="top"
+              type="info"
+              variant="outlined"
+              prominent
+            >
+              <template #title>У вас немає збережених стікерів.</template>
+              <template #text>
+                Надсилайте стікери у чаті з ботом, щоб вони з'явилися тут.
+              </template>
+            </v-alert>
           </div>
         </v-row>
       </v-container>
