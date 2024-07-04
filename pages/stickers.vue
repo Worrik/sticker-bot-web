@@ -135,7 +135,26 @@ async function goToPaperConfig() {
     </div>
     <div class="d-flex flex-wrap align-center w-100 ga-4 pb-16 flex-column">
       <v-container>
-        <v-row class="justify-center flex-wrap">
+        <v-alert
+          v-if="stickersDataProvider.error"
+          border="top"
+          type="error"
+          variant="outlined"
+          prominent
+        >
+          <template #title>Щось зламалось.. 😔</template>
+        </v-alert>
+        <v-alert
+          v-else-if="stickersDataProvider.items.length === 0"
+          border="top"
+          type="info"
+          variant="outlined"
+          prominent
+        >
+          <template #title>У вас немає збережених стікерів.</template>
+          <template #text> Надсилайте стікери у чаті з ботом, щоб вони з'явилися тут. </template>
+        </v-alert>
+        <v-row v-else class="justify-center flex-wrap">
           <div class="d-flex justify-end flex-column px-2 ga-4">
             <StickersStickerSelect
               v-for="sticker in oddCartColumn"
@@ -155,27 +174,6 @@ async function goToPaperConfig() {
               @addToCart="addToCart(sticker)"
               @removeFromCart="removeFromCart(sticker)"
             />
-            <v-alert
-              v-if="stickersDataProvider.error"
-              border="top"
-              type="error"
-              variant="outlined"
-              prominent
-            >
-              <template #title>Щось зламалось.. 😔</template>
-            </v-alert>
-            <v-alert
-              v-else-if="stickersDataProvider.items.length === 0"
-              border="top"
-              type="info"
-              variant="outlined"
-              prominent
-            >
-              <template #title>У вас немає збережених стікерів.</template>
-              <template #text>
-                Надсилайте стікери у чаті з ботом, щоб вони з'явилися тут.
-              </template>
-            </v-alert>
           </div>
         </v-row>
       </v-container>
@@ -184,7 +182,7 @@ async function goToPaperConfig() {
           <div class="pa-2"></div>
         </template>
         <template #error>
-          <v-alert color="error" dense> Не вдалося завантажити стікери </v-alert>
+          <div class="pa-2"></div>
         </template>
       </v-infinite-scroll>
     </div>
