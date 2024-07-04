@@ -113,7 +113,10 @@ async function goToPaperConfig() {
       </template>
     </v-app-bar>
     <div class="py-12"></div>
-    <div class="px-4 pb-4 ga-4 d-flex flex-wrap" v-if="stickersDataProvider.loading || stickersDataProvider.items.length">
+    <div
+      class="px-4 pb-4 ga-4 d-flex flex-wrap"
+      v-if="stickersDataProvider.loading || stickersDataProvider.items.length"
+    >
       <v-btn
         variant="tonal"
         color="primary"
@@ -145,7 +148,7 @@ async function goToPaperConfig() {
           <template #title>Щось зламалось.. 😔</template>
         </v-alert>
         <v-alert
-          v-else-if="stickersDataProvider.items.length === 0"
+          v-else-if="stickersDataProvider.items.length === 0 && !stickersDataProvider.loading"
           border="top"
           type="info"
           variant="outlined"
