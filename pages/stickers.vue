@@ -148,7 +148,7 @@ async function goToPaperConfig() {
           <template #title>Щось зламалось.. 😔</template>
         </v-alert>
         <v-alert
-          v-else-if="stickersDataProvider.items.length === 0 && !stickersDataProvider.loading"
+          v-else-if="stickersDataProvider.items.length === 0 && !stickersDataProvider.loading && stickersDataProvider.paginator.page"
           border="top"
           type="info"
           variant="outlined"
