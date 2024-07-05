@@ -76,6 +76,7 @@ async function removeStickers(stickers: Array<ISticker>) {
     async (ok: boolean) => {
       if (!ok) return;
       cart.value = cart.value.filter((item) => !stickers.includes(item.sticker));
+      loading.value = true;
       for (let index = 0; index < stickers.length; index++) {
         progress.value = Math.round(((index + 1) / stickers.length) * 100);
         await $fetch(`${apiUrl}/stickers/${stickers[index].id}/`, {
@@ -87,6 +88,7 @@ async function removeStickers(stickers: Array<ISticker>) {
       }
       stickersDataProvider.reset();
       await stickersDataProvider.loadMore();
+      loading.value = false;
     }
   );
 }
@@ -98,15 +100,15 @@ async function goToPaperConfig() {
 
 <template>
   <div>
-    <v-progress-linear
-      :active="loading"
-      :indeterminate="loading"
-      color="primary"
-      absolute
-      bottom
-    ></v-progress-linear>
     <v-app-bar>
       <v-app-bar-title>Обери стікери</v-app-bar-title>
+      <v-progress-linear
+        :model-value="progress"
+        :active="loading"
+        color="primary"
+        absolute
+        bottom
+      ></v-progress-linear>
       <template #append>
         <v-chip v-if="stickersCount > 0" color="primary" text-color="white" class="mr-4">
           <v-icon left>mdi-sticker</v-icon>
