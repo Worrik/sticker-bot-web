@@ -123,7 +123,7 @@ async function goToPaperConfig() {
         </v-btn>
       </template>
     </v-app-bar>
-    <v-main :class="{ 'opacity-50': loading, 'pointer-events-none': loading }">
+    <v-main :class="{ 'opacity-50': loading, 'pointer-events-none': loading }" class="pt-2">
       <div
         class="px-4 pb-4 ga-4 d-flex flex-wrap"
         v-if="stickersDataProvider.loading || stickersDataProvider.items.length"
