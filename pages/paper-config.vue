@@ -1,9 +1,15 @@
 <script setup lang="ts">
-import { PAPER_COSTS, type IStickerCartItem } from '~/models/stickers';
+import type { IStickerPaper, IStickerCartItem } from '~/models/stickers';
 
 const router = useRouter();
 
 const cart = useState<Array<IStickerCartItem>>('cart', () => []);
+
+const { data: stickerPapers } = await useFetch<IStickerPaper[]>(`${apiUrl}/stickers/papers/`);
+
+function getStickerPaperByName(name: string): IStickerPaper | undefined {
+  return stickerPapers.value?.find((paper) => paper.name === name);
+}
 
 const orderSumPrice = computed(() => {
   return (
@@ -11,7 +17,9 @@ const orderSumPrice = computed(() => {
       return (
         acc +
         stickerItem.options.reduce((acc, option) => {
-          return acc + option.quantity * PAPER_COSTS[option.paperType];
+          const paper = getStickerPaperByName(option.paperType);
+          const price = paper?.price || 0;
+          return acc + option.quantity * price;
         }, 0)
       );
     }, 0) + 60

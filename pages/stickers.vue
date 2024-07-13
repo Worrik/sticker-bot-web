@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { IPage, IPaginator } from '~/models/pagination';
-import { PaperTypes, type ISticker, type IStickerCartItem } from '~/models/stickers';
+import { type ISticker, type IStickerCartItem } from '~/models/stickers';
 import { getWebAppInitData } from '~/utils/apiUrl';
 
 const router = useRouter();
@@ -44,7 +44,7 @@ function addToCart(sticker: ISticker) {
   if (isStickerSelected(sticker)) return;
   cart.value.push({
     sticker,
-    options: [{ paperType: PaperTypes.Glossy, quantity: 1 }],
+    options: [],
   });
 }
 
@@ -55,7 +55,7 @@ function removeFromCart(sticker: ISticker) {
 function selectAll() {
   cart.value = stickersDataProvider.items.map((sticker) => ({
     sticker,
-    options: [{ paperType: PaperTypes.Glossy, quantity: 1 }],
+    options: [],
   }));
 }
 

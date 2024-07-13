@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import type { ISticker, IStickerOption } from '~/models/stickers';
-import { PaperTypes, PAPER_COSTS } from '~/models/stickers';
+import type { ISticker, IStickerOption, IStickerPaper } from '~/models/stickers';
 
 export interface Props {
   sticker: ISticker;
@@ -14,7 +13,11 @@ export interface Emits {
 const props = defineProps<Props>();
 const emits = defineEmits<Emits>();
 
-const PAPER_TYPES = [PaperTypes.Glossy, PaperTypes.Matte, PaperTypes.Magnetic, PaperTypes.Yellow];
+const { data: stickerPapers } = await useFetch<IStickerPaper[]>(`${apiUrl}/stickers/papers/`);
+
+function getStickerPaperByName(name: string): IStickerPaper | undefined {
+  return stickerPapers.value?.find((paper) => paper.name === name);
+}
 
 const localOptions = computed<Array<IStickerOption>>({
   get: () => props.options,
@@ -23,22 +26,33 @@ const localOptions = computed<Array<IStickerOption>>({
   },
 });
 
-const notSelectedPaperTypes = computed(() => {
-  return PAPER_TYPES.filter(
-    (type) => !localOptions.value.some((option) => option.paperType === type)
+const notSelectedPaperTypes = computed<Array<string>>(() => {
+  return (
+    stickerPapers.value
+      ?.filter((paper) => !localOptions.value.some((option) => option.paperType === paper.name))
+      .map((paper) => paper.name) || []
   );
 });
 
 const price = computed(() => {
   return localOptions.value.reduce((acc, option) => {
-    return acc + option.quantity * PAPER_COSTS[option.paperType];
+    const paper = getStickerPaperByName(option.paperType);
+    const price = paper?.price || 0;
+    return acc + option.quantity * price;
   }, 0);
 });
 
 const optionsSumText = computed(() => {
-  return localOptions.value
-    .map((option) => `${option.quantity} x ${PAPER_COSTS[option.paperType]}`)
-    .join(' + ') + ' = ' + price.value + 'грн.';
+  return (
+    localOptions.value
+      .map(
+        (option) => `${option.quantity} x ${getStickerPaperByName(option.paperType)?.price || 0}`
+      )
+      .join(' + ') +
+    ' = ' +
+    price.value +
+    'грн.'
+  );
 });
 
 function availablePaperTypes(option: IStickerOption) {
