@@ -27,6 +27,10 @@ const localOptions = computed<Array<IStickerOption>>({
 });
 
 const notSelectedPaperTypes = computed<Array<string>>(() => {
+  console.log({
+    stickerPapers: stickerPapers.value,
+    localOptions: localOptions.value,
+  })
   return (
     stickerPapers.value
       ?.filter((paper) => !localOptions.value.some((option) => option.paperType === paper.name))
@@ -98,7 +102,7 @@ function addOption() {
           inset
           :min="0"
           :max="100"
-          @update:modelValue="option.quantity = parseInt($event)"
+          @update:modelValue="option.quantity = parseInt($event.toString())"
         ></v-number-input>
       </div>
       <v-btn
