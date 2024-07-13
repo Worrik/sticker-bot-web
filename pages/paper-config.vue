@@ -9,17 +9,22 @@ const cart = useState<Array<IStickerCartItem>>('cart', () => []);
 const { data: stickerPapers } = await useFetch<IPage<IStickerPaper>>(
   `${apiUrl}/stickers/papers/?per_page=100`,
   {
-    onResponse() {
-      if (!stickerPapers.value?.items.length) return;
-      cart.value = cart.value.map((stickerItem) => {
-        if (!stickerItem.options.length)
-          stickerItem.options.push({
-            paperType: stickerPapers.value?.items[0].name!,
-            quantity: 1,
-          });
-        return stickerItem;
-      });
-    },
+    onResponse() {},
+  }
+);
+
+watch(
+  () => stickerPapers.value?.items,
+  () => {
+    if (!stickerPapers.value?.items.length) return;
+    cart.value = cart.value.map((stickerItem) => {
+      if (!stickerItem.options.length)
+        stickerItem.options.push({
+          paperType: stickerPapers.value?.items[0].name!,
+          quantity: 1,
+        });
+      return stickerItem;
+    });
   }
 );
 
