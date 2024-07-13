@@ -1,9 +1,11 @@
 <script setup lang="ts">
+import type { IPage } from '~/models/pagination';
 import type { ISticker, IStickerOption, IStickerPaper } from '~/models/stickers';
 
 export interface Props {
   sticker: ISticker;
   options: Array<IStickerOption>;
+  stickerPapers: Array<IStickerPaper>;
 }
 
 export interface Emits {
@@ -13,10 +15,8 @@ export interface Emits {
 const props = defineProps<Props>();
 const emits = defineEmits<Emits>();
 
-const { data: stickerPapers } = await useFetch<IStickerPaper[]>(`${apiUrl}/stickers/papers/`);
-
 function getStickerPaperByName(name: string): IStickerPaper | undefined {
-  return stickerPapers.value?.find((paper) => paper.name === name);
+  return props.stickerPapers.find((paper) => paper.name === name);
 }
 
 const localOptions = computed<Array<IStickerOption>>({
@@ -27,13 +27,9 @@ const localOptions = computed<Array<IStickerOption>>({
 });
 
 const notSelectedPaperTypes = computed<Array<string>>(() => {
-  console.log({
-    stickerPapers: stickerPapers.value,
-    localOptions: localOptions.value,
-  })
   return (
-    stickerPapers.value
-      ?.filter((paper) => !localOptions.value.some((option) => option.paperType === paper.name))
+    props.stickerPapers
+      .filter((paper) => !localOptions.value.some((option) => option.paperType === paper.name))
       .map((paper) => paper.name) || []
   );
 });

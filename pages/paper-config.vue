@@ -1,14 +1,15 @@
 <script setup lang="ts">
+import type { IPage } from '~/models/pagination';
 import type { IStickerPaper, IStickerCartItem } from '~/models/stickers';
 
 const router = useRouter();
 
 const cart = useState<Array<IStickerCartItem>>('cart', () => []);
 
-const { data: stickerPapers } = await useFetch<IStickerPaper[]>(`${apiUrl}/stickers/papers/`);
+const { data: stickerPapers } = await useFetch<IPage<IStickerPaper>>(`${apiUrl}/stickers/papers/`);
 
 function getStickerPaperByName(name: string): IStickerPaper | undefined {
-  return stickerPapers.value?.find((paper) => paper.name === name);
+  return stickerPapers.value?.items.find((paper) => paper.name === name);
 }
 
 const orderSumPrice = computed(() => {
@@ -68,9 +69,10 @@ async function createOrder() {
       <div class="d-flex flex-column ga-4">
         <StickersStickerPaperConfig
           v-for="stickerItem in cart"
-          :key="stickerItem.sticker.id"
           v-model:sticker="stickerItem.sticker"
+          :key="stickerItem.sticker.id"
           :options="stickerItem.options"
+          :sticker-papers="stickerPapers?.items || []"
         />
       </div>
       <v-alert text="Доставка по Україні - 60 грн." type="info" variant="tonal" class="mt-4"></v-alert>
