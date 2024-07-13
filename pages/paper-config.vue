@@ -6,7 +6,9 @@ const router = useRouter();
 
 const cart = useState<Array<IStickerCartItem>>('cart', () => []);
 
-const { data: stickerPapers } = await useFetch<IPage<IStickerPaper>>(`${apiUrl}/stickers/papers/?per_page=100`);
+const { data: stickerPapers } = await useFetch<IPage<IStickerPaper>>(
+  `${apiUrl}/stickers/papers/?per_page=100`
+);
 
 function getStickerPaperByName(name: string): IStickerPaper | undefined {
   return stickerPapers.value?.items.find((paper) => paper.name === name);
@@ -16,16 +18,17 @@ watch(
   stickerPapers,
   () => {
     if (!stickerPapers.value?.items.length) return;
-    cart.value.forEach((stickerItem) => {
-      if (stickerItem.options.length) return;
-      stickerItem.options.push({
-        paperType: stickerPapers.value?.items[0].name!,
-        quantity: 1,
-      });
+    cart.value = cart.value.map((stickerItem) => {
+      if (!stickerItem.options.length)
+        stickerItem.options.push({
+          paperType: stickerPapers.value?.items[0].name!,
+          quantity: 1,
+        });
+      return stickerItem;
     });
   },
   { deep: true }
-)
+);
 
 const orderSumPrice = computed(() => {
   return (
@@ -90,7 +93,12 @@ async function createOrder() {
           :sticker-papers="stickerPapers?.items || []"
         />
       </div>
-      <v-alert text="Доставка по Україні - 60 грн." type="info" variant="tonal" class="mt-4"></v-alert>
+      <v-alert
+        text="Доставка по Україні - 60 грн."
+        type="info"
+        variant="tonal"
+        class="mt-4"
+      ></v-alert>
     </div>
     <tg-back-button @click="router.push('/stickers')" />
     <tg-main-button
