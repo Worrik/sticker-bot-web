@@ -6,11 +6,26 @@ const router = useRouter();
 
 const cart = useState<Array<IStickerCartItem>>('cart', () => []);
 
-const { data: stickerPapers } = await useFetch<IPage<IStickerPaper>>(`${apiUrl}/stickers/papers/`);
+const { data: stickerPapers } = await useFetch<IPage<IStickerPaper>>(`${apiUrl}/stickers/papers/?per_page=100`);
 
 function getStickerPaperByName(name: string): IStickerPaper | undefined {
   return stickerPapers.value?.items.find((paper) => paper.name === name);
 }
+
+watch(
+  stickerPapers,
+  () => {
+    if (!stickerPapers.value?.items.length) return;
+    cart.value.forEach((stickerItem) => {
+      if (stickerItem.options.length) return;
+      stickerItem.options.push({
+        paperType: stickerPapers.value?.items[0].name!,
+        quantity: 1,
+      });
+    });
+  },
+  { deep: true }
+)
 
 const orderSumPrice = computed(() => {
   return (
