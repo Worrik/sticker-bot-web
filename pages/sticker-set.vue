@@ -50,7 +50,7 @@ async function addStickers() {
       },
     });
   }
-  window.Telegram.WebApp.showAlert('Замовлення успішно створено. Очікуйте підтвердження.');
+  window.Telegram.WebApp.showAlert('Стікери збережено.');
   window.Telegram.WebApp.close();
 }
 </script>
