@@ -52,11 +52,15 @@ function removeFromCart(sticker: ISticker) {
   cart.value = cart.value.filter((item) => item.sticker.id !== sticker.id);
 }
 
-function selectAll() {
-  cart.value = stickersDataProvider.items.map((sticker) => ({
-    sticker,
-    options: [],
-  }));
+function selectOrUnselectAll() {
+  if (stickersCount.value !== stickersDataProvider.items.length) {
+    cart.value = stickersDataProvider.items.map((sticker) => ({
+      sticker,
+      options: [],
+    }));
+  } else {
+    cart.value = [];
+  }
 }
 
 function isStickerSelected(sticker: ISticker) {
@@ -130,13 +134,8 @@ async function goToPaperConfig() {
         class="pa-4 ga-4 d-flex flex-wrap"
         v-if="stickersDataProvider.loading || stickersDataProvider.items.length"
       >
-        <v-btn
-          variant="tonal"
-          color="primary"
-          appendIcon="mdi-check"
-          @click="selectAll"
-        >
-        {{ stickersCount !== stickersDataProvider.items.length ? 'Вибрати всі' : 'Прибрати всі' }}
+        <v-btn variant="tonal" color="primary" appendIcon="mdi-check" @click="selectOrUnselectAll">
+          {{ stickersCount !== stickersDataProvider.items.length ? 'Вибрати всі' : 'Прибрати всі' }}
         </v-btn>
         <v-btn
           variant="tonal"
@@ -211,6 +210,6 @@ async function goToPaperConfig() {
 
 <style scoped>
 .disable-events {
-  pointer-events: none
+  pointer-events: none;
 }
 </style>

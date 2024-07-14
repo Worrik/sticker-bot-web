@@ -37,8 +37,12 @@ function unselectSticker(sticker: IStickerThumbnail) {
   );
 }
 
-function selectAll() {
-  selectedStickers.value = stickerSet.value?.stickers || [];
+function selectOrUnselectAll() {
+  if (selectedStickers.value.length !== stickerSet.value?.stickers.length) {
+    selectedStickers.value = stickerSet.value?.stickers || [];
+  } else {
+    selectedStickers.value = [];
+  }
 }
 
 async function addStickers() {
@@ -61,7 +65,7 @@ async function addStickers() {
 </script>
 
 <template>
-  <v-container class="d-flex justify-center flex-column">
+  <v-container class="d-flex justify-center flex-column" :class="{ 'opacity-50': loading, 'disable-events': loading }">
     <v-progress-linear
       :model-value="progress"
       :active="loading"
@@ -75,7 +79,7 @@ async function addStickers() {
       </h1>
     </v-row>
     <v-row class="my-4 px-2">
-      <v-btn variant="tonal" color="primary" appendIcon="mdi-check" @click="selectAll">
+      <v-btn variant="tonal" color="primary" appendIcon="mdi-check" @click="selectOrUnselectAll">
         {{
           selectedStickers.length !== stickerSet?.stickers.length ? 'Вибрати всі' : 'Прибрати всі'
         }}
@@ -106,3 +110,9 @@ async function addStickers() {
     <tg-main-button v-if="selectedStickers.length > 0" text="Додати" @click="addStickers" />
   </v-container>
 </template>
+
+<style scoped>
+.disable-events {
+  pointer-events: none;
+}
+</style>
