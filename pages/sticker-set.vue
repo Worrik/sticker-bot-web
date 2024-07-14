@@ -43,18 +43,22 @@ function selectAll() {
 
 <template>
   <v-container class="d-flex justify-center flex-column">
-    <h1 class="text-center">
-      {{ stickerSet?.name }}
-    </h1>
-    <v-btn
-      variant="tonal"
-      color="primary"
-      appendIcon="mdi-check"
-      :disabled="selectedStickers.length === stickerSet?.stickers.length"
-      @click="selectAll"
-    >
-      Обрати всі
-    </v-btn>
+    <v-row>
+      <h1 class="text-center">
+        {{ stickerSet?.name }}
+      </h1>
+    </v-row>
+    <v-row>
+      <v-btn
+        variant="tonal"
+        color="primary"
+        appendIcon="mdi-check"
+        :disabled="selectedStickers.length === stickerSet?.stickers.length"
+        @click="selectAll"
+      >
+        Обрати всі
+      </v-btn>
+    </v-row>
     <v-row class="justify-center flex-wrap">
       <div class="d-flex justify-end flex-column px-2 ga-4">
         <StickersStickerSelect
