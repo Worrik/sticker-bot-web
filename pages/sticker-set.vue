@@ -87,7 +87,7 @@ async function addStickers() {
           absolute
           bottom
         ></v-progress-linear>
-        <v-row class="mt-6 mb-4 px-2">
+        <v-row class="my-2 px-4">
           <v-btn
             variant="tonal"
             color="primary"
