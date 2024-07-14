@@ -134,10 +134,9 @@ async function goToPaperConfig() {
           variant="tonal"
           color="primary"
           appendIcon="mdi-check"
-          :disabled="stickersCount === stickersDataProvider.items.length"
           @click="selectAll"
         >
-          Обрати всі
+        {{ stickersCount !== stickersDataProvider.items.length ? 'Вибрати всі' : 'Прибрати всі' }}
         </v-btn>
         <v-btn
           variant="tonal"
@@ -175,7 +174,7 @@ async function goToPaperConfig() {
             <template #text> Надсилайте стікери у чаті з ботом, щоб вони з'явилися тут. </template>
           </v-alert>
           <v-row v-else class="justify-center flex-wrap">
-            <div class="d-flex justify-end flex-column px-2 ga-4">
+            <div class="d-flex flex-column px-2 ga-4">
               <StickersStickerSelect
                 v-for="sticker in oddCartColumn"
                 :key="sticker.id"
@@ -185,7 +184,7 @@ async function goToPaperConfig() {
                 @unselect="removeFromCart(sticker)"
               />
             </div>
-            <div class="d-flex justify-start flex-column px-2 ga-4">
+            <div class="d-flex flex-column px-2 ga-4">
               <StickersStickerSelect
                 v-for="sticker in evenCartColumn"
                 :key="sticker.id"

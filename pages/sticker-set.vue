@@ -39,6 +39,21 @@ function unselectSticker(sticker: IStickerThumbnail) {
 function selectAll() {
   selectedStickers.value = stickerSet.value?.stickers || [];
 }
+
+async function addStickers() {
+  await $fetch(`${apiUrl}/orders/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: getWebAppInitData(),
+    },
+    body: JSON.stringify({
+      stickers: selectedStickers.value.map((s) => s.sticker_id),
+    }),
+  });
+  window.Telegram.WebApp.showAlert('Замовлення успішно створено. Очікуйте підтвердження.');
+  window.Telegram.WebApp.close();
+}
 </script>
 
 <template>
@@ -48,19 +63,15 @@ function selectAll() {
         {{ stickerSet?.name }}
       </h1>
     </v-row>
-    <v-row>
-      <v-btn
-        variant="tonal"
-        color="primary"
-        appendIcon="mdi-check"
-        :disabled="selectedStickers.length === stickerSet?.stickers.length"
-        @click="selectAll"
-      >
-        Обрати всі
+    <v-row class="my-4">
+      <v-btn variant="tonal" color="primary" appendIcon="mdi-check" @click="selectAll">
+        {{
+          selectedStickers.length !== stickerSet?.stickers.length ? 'Вибрати всі' : 'Прибрати всі'
+        }}
       </v-btn>
     </v-row>
     <v-row class="justify-center flex-wrap">
-      <div class="d-flex justify-end flex-column px-2 ga-4">
+      <div class="d-flex flex-column px-2 ga-4">
         <StickersStickerSelect
           v-for="sticker in oddCartColumn"
           :key="sticker.file_id"
@@ -70,7 +81,7 @@ function selectAll() {
           @unselect="unselectSticker(sticker)"
         />
       </div>
-      <div class="d-flex justify-start flex-column px-2 ga-4">
+      <div class="d-flex flex-column px-2 ga-4">
         <StickersStickerSelect
           v-for="sticker in evenCartColumn"
           :key="sticker.file_id"
@@ -81,5 +92,6 @@ function selectAll() {
         />
       </div>
     </v-row>
+    <tg-main-button v-if="selectedStickers.length > 0" text="Додати" @click="addStickers" />
   </v-container>
 </template>
