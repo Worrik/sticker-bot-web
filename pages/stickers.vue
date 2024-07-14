@@ -119,6 +119,7 @@ async function goToPaperConfig() {
           {{ stickersCount }}
         </v-chip>
         <v-btn
+          class="ml-2"
           appendIcon="mdi-tune"
           variant="elevated"
           color="primary"
