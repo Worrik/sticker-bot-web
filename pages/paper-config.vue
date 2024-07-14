@@ -16,7 +16,6 @@ const { data: stickerPapers } = await useFetch<IPage<IStickerPaper>>(
 onMounted(
   async () => {
     await nextTick();
-    console.log('stickerPapers', stickerPapers.value?.items);
     if (!stickerPapers.value?.items.length) return;
     cart.value = cart.value.map((stickerItem) => {
       if (!stickerItem.options.length)

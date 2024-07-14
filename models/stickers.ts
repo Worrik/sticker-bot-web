@@ -17,3 +17,13 @@ export interface IStickerPaper {
   name: string;
   price: number;
 }
+
+export interface IStickerThumbnail {
+  file_id: string;
+  sticker_id: string;
+}
+
+export interface IStickerSet {
+  name: string;
+  stickers: Array<IStickerThumbnail>;
+}

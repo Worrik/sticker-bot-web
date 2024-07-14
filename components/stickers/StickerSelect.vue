@@ -1,15 +1,12 @@
 <script setup lang="ts">
-import type { ISticker } from '~/models/stickers';
-
 export interface Props {
-  sticker: ISticker;
+  url: string;
   selected: boolean;
 }
 
 export interface Emits {
-  (event: 'addToCart'): void;
-  (event: 'removeFromCart'): void;
-  (event: 'removeSticker'): void;
+  (event: 'select'): void;
+  (event: 'unselect'): void;
 }
 
 defineProps<Props>();
@@ -23,9 +20,11 @@ const emits = defineEmits<Emits>();
     :class="{
       chosen: selected,
     }"
-    @click="selected ? emits('removeFromCart') : emits('addToCart')"
+    @click="selected ? emits('unselect') : emits('select')"
   >
-    <v-img class="sticker-img ma-2" :src="sticker.url"></v-img>
+    <v-skeleton-loader type="image" height="140">
+      <v-img class="sticker-img ma-2" :src="url"></v-img>
+    </v-skeleton-loader>
   </v-card>
 </template>
 

@@ -179,20 +179,20 @@ async function goToPaperConfig() {
               <StickersStickerSelect
                 v-for="sticker in oddCartColumn"
                 :key="sticker.id"
-                :sticker="sticker"
+                :url="sticker.url"
                 :selected="isStickerSelected(sticker)"
-                @addToCart="addToCart(sticker)"
-                @removeFromCart="removeFromCart(sticker)"
+                @select="addToCart(sticker)"
+                @unselect="removeFromCart(sticker)"
               />
             </div>
             <div class="d-flex justify-start flex-column px-2 ga-4">
               <StickersStickerSelect
                 v-for="sticker in evenCartColumn"
                 :key="sticker.id"
-                :sticker="sticker"
+                :url="sticker.url"
                 :selected="isStickerSelected(sticker)"
-                @addToCart="addToCart(sticker)"
-                @removeFromCart="removeFromCart(sticker)"
+                @select="addToCart(sticker)"
+                @unselect="removeFromCart(sticker)"
               />
             </div>
           </v-row>
