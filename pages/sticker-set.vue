@@ -69,7 +69,7 @@ async function addStickers() {
 <template>
   <div>
     <v-app-bar>
-      <v-app-bar-title>Обери стікери</v-app-bar-title>
+      <v-app-bar-title> {{ stickerSet?.name }} </v-app-bar-title>
       <v-progress-linear
         :model-value="progress"
         :active="loading"
@@ -88,9 +88,7 @@ async function addStickers() {
           bottom
         ></v-progress-linear>
         <v-row>
-          <h1 class="text-center">
-            {{ stickerSet?.name }}
-          </h1>
+          <h1 class="text-center"></h1>
         </v-row>
         <v-row class="my-4 px-2">
           <v-btn
