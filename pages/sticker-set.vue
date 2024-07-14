@@ -41,16 +41,15 @@ function selectAll() {
 }
 
 async function addStickers() {
-  await $fetch(`${apiUrl}/orders/`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: getWebAppInitData(),
-    },
-    body: JSON.stringify({
-      stickers: selectedStickers.value.map((s) => s.sticker_id),
-    }),
-  });
+  for (const sticker of selectedStickers.value) {
+    await $fetch(`${apiUrl}/stickers/save/${sticker.sticker_id}/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: getWebAppInitData(),
+      },
+    });
+  }
   window.Telegram.WebApp.showAlert('Замовлення успішно створено. Очікуйте підтвердження.');
   window.Telegram.WebApp.close();
 }
