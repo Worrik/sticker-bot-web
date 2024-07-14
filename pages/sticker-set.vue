@@ -7,9 +7,10 @@ const { data: stickerSet } = await useFetch<IStickerSet>(
   `${apiUrl}/stickers/set/?name=${route.query.name}`
 );
 
-console.log(stickerSet.value);
-
 const selectedStickers = ref<Array<IStickerThumbnail>>([]);
+
+const progress = ref(0);
+const loading = ref(false);
 
 const oddCartColumn = computed<Array<IStickerThumbnail>>(() => {
   return stickerSet.value?.stickers.filter((_, index) => index % 2 === 0) || [];
@@ -41,7 +42,10 @@ function selectAll() {
 }
 
 async function addStickers() {
-  for (const sticker of selectedStickers.value) {
+  loading.value = true;
+  for (let index = 0; index < selectedStickers.value.length; index++) {
+    const sticker = selectedStickers.value[index];
+    progress.value = Math.round(((index + 1) / selectedStickers.value.length) * 100);
     await $fetch(`${apiUrl}/stickers/save/${sticker.sticker_id}/`, {
       method: 'POST',
       headers: {
@@ -50,6 +54,7 @@ async function addStickers() {
       },
     });
   }
+  loading.value = false;
   window.Telegram.WebApp.showAlert('Стікери збережено.');
   window.Telegram.WebApp.close();
 }
@@ -57,12 +62,19 @@ async function addStickers() {
 
 <template>
   <v-container class="d-flex justify-center flex-column">
+    <v-progress-linear
+      :model-value="progress"
+      :active="loading"
+      color="primary"
+      absolute
+      bottom
+    ></v-progress-linear>
     <v-row>
       <h1 class="text-center">
         {{ stickerSet?.name }}
       </h1>
     </v-row>
-    <v-row class="my-4">
+    <v-row class="my-4 px-2">
       <v-btn variant="tonal" color="primary" appendIcon="mdi-check" @click="selectAll">
         {{
           selectedStickers.length !== stickerSet?.stickers.length ? 'Вибрати всі' : 'Прибрати всі'
