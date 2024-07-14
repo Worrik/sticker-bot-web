@@ -6,7 +6,7 @@ import { getWebAppInitData } from '~/utils/apiUrl';
 const router = useRouter();
 
 const stickersDataProvider = useGenericPaginatedDataProvider<ISticker>({
-  itemsPerPage: 100,
+  itemsPerPage: 1000,
   fetchItems: async (paginator: IPaginator) => {
     return await $fetch<IPage<ISticker>>(
       `${apiUrl}/stickers/?page=${paginator.page}&per_page=${paginator.perPage}`,
