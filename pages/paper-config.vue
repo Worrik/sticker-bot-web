@@ -127,7 +127,7 @@ async function createOrder() {
 <template>
   <div>
     <v-app-bar>
-      <v-app-bar-title>Обери папір та доставку</v-app-bar-title>
+      <v-app-bar-title>Папір та доставка</v-app-bar-title>
       <template #append>
         <span>
           <v-chip :color="orderSumPrice > 0 ? 'primary' : 'grey'" text-color="white">
@@ -160,7 +160,7 @@ async function createOrder() {
     <tg-back-button @click="router.push('/stickers')" />
     <tg-main-button
       v-if="orderSumPrice > 0 && isDeliverySelected()"
-      :text="`Підтвердити замовлення (${orderSumPrice} грн.)`"
+      :text="`Підтвердити замовлення (${orderSumPrice + deliveryPrice} грн.)`"
       @click="createOrder"
     />
   </div>
