@@ -114,16 +114,6 @@ async function goToPaperConfig() {
           <v-icon left>mdi-sticker</v-icon>
           {{ stickersCount }}
         </v-chip>
-        <v-btn
-          class="ml-2"
-          appendIcon="mdi-tune"
-          variant="elevated"
-          color="primary"
-          @click="goToPaperConfig"
-          :disabled="stickersCount === 0"
-        >
-          Далі
-        </v-btn>
       </template>
     </v-app-bar>
     <v-main :class="{ 'opacity-50': loading, 'disable-events': loading }">
@@ -202,6 +192,7 @@ async function goToPaperConfig() {
         </v-infinite-scroll>
       </div>
     </v-main>
+    <tg-main-button v-if="stickersCount === 0" text="Далі" @click="goToPaperConfig" />
   </div>
 </template>
 
