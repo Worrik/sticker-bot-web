@@ -76,6 +76,8 @@ watch(
       },
     });
     deliveryPrice.value = result.data[0].Cost;
+    console.log(result);
+    console.log(deliveryPrice.value);
   },
   { deep: true }
 );
