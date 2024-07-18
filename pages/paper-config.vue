@@ -23,7 +23,10 @@ const { data: lastDelivery } = await useFetch<{
   warehouse: string | null;
   phone: string | null;
   name: string | null;
-}>(`${apiUrl}/orders/last-delivery/`);
+}>(
+  `${apiUrl}/orders/last-delivery/`,
+  { headers: { Authorization: getWebAppInitData() } }
+);
 
 async function getCityByRef(ref_value: string): Promise<ICity | null> {
   const result = await $fetch<{ data: ICity[]; info: { totalCount: number } }>(
@@ -68,7 +71,7 @@ onMounted(async () => {
         });
       return stickerItem;
     });
-  
+
   if (lastDelivery.value) {
     const city = await getCityByRef(lastDelivery.value.city!);
     const warehouse = await getWarehouseByRef(lastDelivery.value.warehouse!);

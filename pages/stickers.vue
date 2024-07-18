@@ -10,11 +10,7 @@ const stickersDataProvider = useGenericPaginatedDataProvider<ISticker>({
   fetchItems: async (paginator: IPaginator) => {
     return await $fetch<IPage<ISticker>>(
       `${apiUrl}/stickers/?page=${paginator.page}&per_page=${paginator.perPage}`,
-      {
-        headers: {
-          Authorization: getWebAppInitData(),
-        },
-      }
+      { headers: { Authorization: getWebAppInitData() } }
     );
   },
 });
