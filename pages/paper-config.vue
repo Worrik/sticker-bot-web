@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { INPData } from '~/models/novaposhta';
+import type { ICity, ICityWarehouse, INPData } from '~/models/novaposhta';
 import type { IPage } from '~/models/pagination';
 import type { IStickerPaper, IStickerCartItem } from '~/models/stickers';
 
@@ -15,23 +15,70 @@ const npData = ref<INPData>({
 const deliveryPrice = ref<number>(0);
 
 const { data: stickerPapers } = await useFetch<IPage<IStickerPaper>>(
-  `${apiUrl}/stickers/papers/?per_page=100`,
-  {
-    onResponse() {},
-  }
+  `${apiUrl}/stickers/papers/?per_page=100`
 );
+
+const { data: lastDelivery } = await useFetch<{
+  city: string | null;
+  warehouse: string | null;
+  phone: string | null;
+  name: string | null;
+}>(`${apiUrl}/orders/last-delivery/`);
+
+async function getCityByRef(ref_value: string): Promise<ICity | null> {
+  const result = await $fetch<{ data: ICity[]; info: { totalCount: number } }>(
+    'https://api.novaposhta.ua/v2.0/json/',
+    {
+      method: 'POST',
+      body: {
+        apiKey: '',
+        modelName: 'Address',
+        calledMethod: 'getCities',
+        methodProperties: { Ref: ref_value },
+      },
+    }
+  );
+  return result.data[0];
+}
+
+async function getWarehouseByRef(ref_value: string): Promise<ICityWarehouse | null> {
+  const result = await $fetch<{ data: ICityWarehouse[]; info: { totalCount: number } }>(
+    'https://api.novaposhta.ua/v2.0/json/',
+    {
+      method: 'POST',
+      body: {
+        apiKey: '',
+        modelName: 'Address',
+        calledMethod: 'getWarehouses',
+        methodProperties: { CityRef: ref_value },
+      },
+    }
+  );
+  return result.data[0];
+}
 
 onMounted(async () => {
   await nextTick();
-  if (!stickerPapers.value?.items.length) return;
-  cart.value = cart.value.map((stickerItem) => {
-    if (!stickerItem.options.length)
-      stickerItem.options.push({
-        paperType: stickerPapers.value?.items[0].name!,
-        quantity: 1,
-      });
-    return stickerItem;
-  });
+  if (stickerPapers.value?.items.length)
+    cart.value = cart.value.map((stickerItem) => {
+      if (!stickerItem.options.length)
+        stickerItem.options.push({
+          paperType: stickerPapers.value?.items[0].name!,
+          quantity: 1,
+        });
+      return stickerItem;
+    });
+  
+  if (lastDelivery.value) {
+    const city = await getCityByRef(lastDelivery.value.city!);
+    const warehouse = await getWarehouseByRef(lastDelivery.value.warehouse!);
+    npData.value = {
+      phone: lastDelivery.value.phone,
+      name: lastDelivery.value.name,
+      city,
+      warehouse,
+    };
+  }
 });
 
 function getStickerPaperByName(name: string): IStickerPaper | undefined {
@@ -83,18 +130,16 @@ watch(
 );
 
 const orderSumPrice = computed(() => {
-  return (
-    cart.value.reduce((acc, stickerItem) => {
-      return (
-        acc +
-        stickerItem.options.reduce((acc, option) => {
-          const paper = getStickerPaperByName(option.paperType);
-          const price = paper?.price || 0;
-          return acc + option.quantity * price;
-        }, 0)
-      );
-    }, 0)
-  );
+  return cart.value.reduce((acc, stickerItem) => {
+    return (
+      acc +
+      stickerItem.options.reduce((acc, option) => {
+        const paper = getStickerPaperByName(option.paperType);
+        const price = paper?.price || 0;
+        return acc + option.quantity * price;
+      }, 0)
+    );
+  }, 0);
 });
 
 async function createOrder() {
@@ -135,13 +180,11 @@ async function createOrder() {
       <template #append>
         <span>
           <v-chip :color="orderSumPrice > 0 ? 'primary' : 'grey'" text-color="white">
-            <v-icon left>mdi-sticker</v-icon>:
-            ₴ {{ orderSumPrice }}
+            <v-icon left>mdi-sticker</v-icon>: ₴ {{ orderSumPrice }}
           </v-chip>
           <span class="mx-2">+</span>
           <v-chip :color="deliveryPrice ? 'primary' : 'grey'" text-color="white">
-            <v-icon left>mdi-truck-delivery</v-icon>:
-            ₴ {{ deliveryPrice || '---' }}
+            <v-icon left>mdi-truck-delivery</v-icon>: ₴ {{ deliveryPrice || '---' }}
           </v-chip>
         </span>
       </template>
