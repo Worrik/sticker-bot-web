@@ -46,11 +46,12 @@ function isDeliverySelected(): boolean {
 
 watch(
   npData,
-  async () => {
-    if (!npData.value.city || !npData.value.warehouse) {
+  async (newValue, oldValue) => {
+    if (!newValue.city) {
       deliveryPrice.value = 0;
       return;
     }
+    if (oldValue.city?.Ref === newValue.city.Ref) return;
     const result = await $fetch<{
       data: Array<{
         AssessedCost: number;
@@ -65,7 +66,7 @@ watch(
         calledMethod: 'getDocumentPrice',
         methodProperties: {
           CitySender: 'db5c88d0-391c-11dd-90d9-001a92567626',
-          CityRecipient: npData.value.city.Ref,
+          CityRecipient: newValue.city.Ref,
           Weight: '0.2',
           ServiceType: 'WarehouseWarehouse',
           Cost: '50',
