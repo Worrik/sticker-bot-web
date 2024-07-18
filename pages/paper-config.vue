@@ -117,6 +117,10 @@ async function createOrder() {
     },
     body: JSON.stringify({
       stickers: stickers,
+      city_ref: npData.value.city?.Ref,
+      warehouse_ref: npData.value.warehouse?.Ref,
+      name: npData.value.name,
+      phone: npData.value.phone,
     }),
   });
   window.Telegram.WebApp.showAlert('Замовлення успішно створено. Очікуйте підтвердження.');
