@@ -23,3 +23,10 @@ export interface INovaPoshtaAPISearch<T> {
   search(searchKeyword: string): Promise<void>;
   loadMore(): Promise<void>;
 }
+
+export interface INPData {
+  city?: ICity;
+  warehouse?: ICityWarehouse;
+  phone?: string;
+  name?: string;
+}

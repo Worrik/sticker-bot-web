@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { ICity, ICityWarehouse } from '~/models/novaposhta';
-import type { IStickerCartItem } from '~/models/stickers';
 import { getWebAppInitData } from '~/utils/apiUrl';
 
 
@@ -11,8 +10,6 @@ export interface Emits {
 
 defineProps<Props>();
 defineEmits<Emits>();
-
-const cart = useState<Array<IStickerCartItem>>('cart', () => []);
 
 const citiesSearch = useNovaPoshtaAPISearch<ICity>('Address', 'getCities');
 const postOfficesMethodProperties = computed(() => ({
@@ -38,7 +35,6 @@ async function intersectPostOffices(isIntersecting: boolean) {
 }
 
 async function createOrder() {
-  const stickers = cart.value
   await $fetch(`${apiUrl}/orders/`, {
     method: 'POST',
     headers: {
@@ -46,7 +42,6 @@ async function createOrder() {
       Authorization: getWebAppInitData(),
     },
     body: JSON.stringify({
-      stickers: stickers,
       phone: phone.value,
       name: name.value,
       city: city.value?.Description,
@@ -56,26 +51,11 @@ async function createOrder() {
   window.Telegram.WebApp.showAlert('Замовлення успішно створено. Очікуйте підтвердження.');
   window.Telegram.WebApp.close();
 }
-
-function autocompleteMenuProps() {
-  // default properties copied from the vuetify-autocomplete docs
-  let defaultProps = {
-    closeOnClick: false,
-    closeOnContentClick: false,
-    disableKeys: true,
-    openOnClick: false,
-    maxHeight: 200,
-    top: false,
-  };
-  return defaultProps;
-}
 </script>
 
 <template>
   <div>
     <div class="pa-8">
-      <v-text-field v-model="phone" label="Телефон" type="tel" required clearable />
-      <v-text-field v-model="name" label="Прізвище та ім'я" required clearable />
       <v-autocomplete
         v-model="city"
         label="Місто"
@@ -84,7 +64,9 @@ function autocompleteMenuProps() {
         no-filter
         return-object
         clearable
-        :menu-props="autocompleteMenuProps"
+        :menu-props="{
+          maxHeight: 300,
+        }"
         @update:search="citiesSearch.search"
       >
         <template #append-item>
@@ -105,7 +87,6 @@ function autocompleteMenuProps() {
         no-filter
         return-object
         clearable
-        :menu-props="autocompleteMenuProps"
         @update:search="postOfficesSearch.search"
       >
         <template #append-item>
@@ -118,6 +99,8 @@ function autocompleteMenuProps() {
           </div>
         </template>
       </v-autocomplete>
+      <v-text-field v-model="phone" label="Телефон" type="tel" required clearable />
+      <v-text-field v-model="name" label="Прізвище та ім'я" required clearable />
     </div>
   </div>
 </template>
