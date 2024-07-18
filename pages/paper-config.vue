@@ -93,7 +93,7 @@ const orderSumPrice = computed(() => {
           return acc + option.quantity * price;
         }, 0)
       );
-    }, 0) + deliveryPrice.value
+    }, 0)
   );
 });
 
