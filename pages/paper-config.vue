@@ -127,9 +127,17 @@ async function createOrder() {
     <v-app-bar>
       <v-app-bar-title>Обери папір та доставку</v-app-bar-title>
       <template #append>
-        <v-chip :color="orderSumPrice > 0 ? 'primary' : 'grey'" text-color="white" class="mr-4">
-          ₴ {{ orderSumPrice }}
-        </v-chip>
+        <span>
+          <v-chip :color="orderSumPrice > 0 ? 'primary' : 'grey'" text-color="white">
+            <v-icon left>mdi-sticker</v-icon>:
+            ₴ {{ orderSumPrice }}
+          </v-chip>
+          <span class="mr-4">Сума замовлення:</span>
+          <v-chip :color="isDeliverySelected() ? 'primary' : 'grey'" text-color="white">
+            <v-icon left>mdi-truck-delivery</v-icon>:
+            ₴ {{ isDeliverySelected() ? deliveryPrice : '---' }}
+          </v-chip>
+        </span>
       </template>
     </v-app-bar>
     <div class="py-12"></div>
