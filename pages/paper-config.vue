@@ -91,7 +91,7 @@ const orderSumPrice = computed(() => {
           return acc + option.quantity * price;
         }, 0)
       );
-    }, 0) + 60
+    }, 0) + deliveryPrice.value
   );
 });
 
@@ -145,6 +145,15 @@ async function createOrder() {
       </div>
       <h2 class="mt-8">Доставка</h2>
       <NovaposhtaDeliverySelect v-model:np-data="npData" />
+      <div class="pa-4"></div>
+      <v-divider></v-divider>
+      <div class="pa-4"></div>
+      <!-- delivery price -->
+      <div v-if="isDeliverySelected()">
+        <v-chip class="mr-4" color="primary" text-color="white">
+          Вартість доставки: ₴ {{ deliveryPrice }}
+        </v-chip>
+      </div>
     </div>
     <tg-back-button @click="router.push('/stickers')" />
     <tg-main-button
