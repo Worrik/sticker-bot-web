@@ -64,7 +64,7 @@ function autocompleteMenuProps() {
     closeOnContentClick: false,
     disableKeys: true,
     openOnClick: false,
-    maxHeight: 304,
+    maxHeight: 200,
     top: false,
   };
   return defaultProps;
