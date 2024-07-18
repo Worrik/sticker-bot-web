@@ -32,6 +32,7 @@ const localNpData = computed<INPData>({
 watch(
   () => localNpData.value.city,
   () => {
+    if (localNpData.value.city?.Ref === localNpData.value.warehouse?.CityRef) return;
     localNpData.value.warehouse = null;
     postOfficesSearch.reset();
   }
