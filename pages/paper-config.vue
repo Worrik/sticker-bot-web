@@ -71,7 +71,6 @@ onMounted(async () => {
         });
       return stickerItem;
     });
-
   if (lastDelivery.value) {
     const city = await getCityByRef(lastDelivery.value.city!);
     const warehouse = await getWarehouseByRef(lastDelivery.value.warehouse!);
@@ -171,7 +170,7 @@ async function createOrder() {
       phone: npData.value.phone,
     }),
   });
-  window.Telegram.WebApp.showAlert('Замовлення успішно створено. Очікуйте підтвердження.');
+  window.Telegram.WebApp.showAlert('Замовлення успішно створено. Очікуйте посилання на оплату.');
   window.Telegram.WebApp.close();
 }
 </script>
