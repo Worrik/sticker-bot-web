@@ -95,12 +95,7 @@ async function createOrder() {
           :sticker-papers="stickerPapers?.items || []"
         />
       </div>
-      <v-alert
-        text="Доставка по Україні - 60 грн."
-        type="info"
-        variant="tonal"
-        class="mt-4"
-      ></v-alert>
+      <h2 class="mt-8">Доставка</h2>
       <NovaposhtaDeliverySelect />
     </div>
     <tg-back-button @click="router.push('/stickers')" />

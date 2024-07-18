@@ -55,7 +55,7 @@ async function createOrder() {
 
 <template>
   <div>
-    <div class="pa-8">
+    <div class="mt-4">
       <v-autocomplete
         v-model="city"
         label="Місто"
@@ -65,7 +65,7 @@ async function createOrder() {
         return-object
         clearable
         :menu-props="{
-          maxHeight: 300,
+          maxHeight: 100,
         }"
         @update:search="citiesSearch.search"
       >
