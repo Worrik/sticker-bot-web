@@ -77,7 +77,7 @@ watch(
         },
       },
     });
-    deliveryPrice.value = result.data[0].Cost;
+    deliveryPrice.value = result.data[0].Cost + 5;
   },
   { deep: true }
 );
