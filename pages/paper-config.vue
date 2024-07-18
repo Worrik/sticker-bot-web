@@ -12,6 +12,7 @@ const npData = ref<INPData>({
   city: undefined,
   warehouse: undefined,
 });
+const deliveryPrice = ref<number>(0);
 
 const { data: stickerPapers } = await useFetch<IPage<IStickerPaper>>(
   `${apiUrl}/stickers/papers/?per_page=100`,
@@ -20,28 +21,63 @@ const { data: stickerPapers } = await useFetch<IPage<IStickerPaper>>(
   }
 );
 
-onMounted(
-  async () => {
-    await nextTick();
-    if (!stickerPapers.value?.items.length) return;
-    cart.value = cart.value.map((stickerItem) => {
-      if (!stickerItem.options.length)
-        stickerItem.options.push({
-          paperType: stickerPapers.value?.items[0].name!,
-          quantity: 1,
-        });
-      return stickerItem;
-    });
-  }
-);
+onMounted(async () => {
+  await nextTick();
+  if (!stickerPapers.value?.items.length) return;
+  cart.value = cart.value.map((stickerItem) => {
+    if (!stickerItem.options.length)
+      stickerItem.options.push({
+        paperType: stickerPapers.value?.items[0].name!,
+        quantity: 1,
+      });
+    return stickerItem;
+  });
+});
 
 function getStickerPaperByName(name: string): IStickerPaper | undefined {
   return stickerPapers.value?.items.find((paper) => paper.name === name);
 }
 
 function isDeliverySelected(): boolean {
-  return !!npData.value.city && !!npData.value.warehouse && !!npData.value.phone && !!npData.value.name;
+  return (
+    !!npData.value.city && !!npData.value.warehouse && !!npData.value.phone && !!npData.value.name
+  );
 }
+
+watch(
+  npData,
+  async () => {
+    if (!npData.value.city || !npData.value.warehouse) {
+      deliveryPrice.value = 0;
+      return;
+    }
+    const result = await $fetch<{
+      data: Array<{
+        AssessedCost: number;
+        Cost: number;
+      }>;
+      info: { totalCount: number };
+    }>('https://api.novaposhta.ua/v2.0/json/', {
+      method: 'POST',
+      body: {
+        apiKey: '',
+        modelName: 'InternetDocumentGeneral',
+        calledMethod: 'getDocumentPrice',
+        methodProperties: {
+          CitySender: 'db5c88d0-391c-11dd-90d9-001a92567626',
+          CityRecipient: npData.value.city.Ref,
+          Weight: '0.2',
+          ServiceType: 'WarehouseWarehouse',
+          Cost: '50',
+          CargoType: 'Cargo',
+          SeatsAmount: '1',
+        },
+      },
+    });
+    deliveryPrice.value = result.data[0].Cost;
+  },
+  { deep: true }
+);
 
 const orderSumPrice = computed(() => {
   return (
@@ -88,7 +124,7 @@ async function createOrder() {
 <template>
   <div>
     <v-app-bar>
-      <v-app-bar-title>Обери стікери</v-app-bar-title>
+      <v-app-bar-title>Обери папір та доставку</v-app-bar-title>
       <template #append>
         <v-chip :color="orderSumPrice > 0 ? 'primary' : 'grey'" text-color="white" class="mr-4">
           ₴ {{ orderSumPrice }}

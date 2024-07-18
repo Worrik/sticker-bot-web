@@ -80,9 +80,7 @@ async function createOrder() {
         no-filter
         return-object
         clearable
-        :menu-props="{
-          maxHeight: 120,
-        }"
+        :menu-props="{ maxHeight: 120 }"
         @update:search="citiesSearch.search"
       >
         <template #append-item>
@@ -103,6 +101,7 @@ async function createOrder() {
         no-filter
         return-object
         clearable
+        :menu-props="{ maxHeight: 120 }"
         @update:search="postOfficesSearch.search"
       >
         <template #append-item>
