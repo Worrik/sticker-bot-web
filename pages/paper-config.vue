@@ -133,9 +133,9 @@ async function createOrder() {
             ₴ {{ orderSumPrice }}
           </v-chip>
           <span class="mx-2">+</span>
-          <v-chip :color="isDeliverySelected() ? 'primary' : 'grey'" text-color="white">
+          <v-chip :color="deliveryPrice ? 'primary' : 'grey'" text-color="white">
             <v-icon left>mdi-truck-delivery</v-icon>:
-            ₴ {{ isDeliverySelected() ? deliveryPrice : '---' }}
+            ₴ {{ deliveryPrice || '---' }}
           </v-chip>
         </span>
       </template>
