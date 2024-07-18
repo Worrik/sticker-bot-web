@@ -132,7 +132,7 @@ async function createOrder() {
             <v-icon left>mdi-sticker</v-icon>:
             ₴ {{ orderSumPrice }}
           </v-chip>
-          <span class="mr-4">Сума замовлення:</span>
+          <span class="mx-2">+</span>
           <v-chip :color="isDeliverySelected() ? 'primary' : 'grey'" text-color="white">
             <v-icon left>mdi-truck-delivery</v-icon>:
             ₴ {{ isDeliverySelected() ? deliveryPrice : '---' }}
