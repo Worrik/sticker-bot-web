@@ -1,5 +1,5 @@
 import type { IPaginator } from '~/models/pagination';
-import { debounce } from 'lodash';
+import _ from 'lodash';
 import type { INovaPoshtaAPISearch } from '~/models/novaposhta';
 
 export function useNovaPoshtaAPISearch<T>(
@@ -16,7 +16,7 @@ export function useNovaPoshtaAPISearch<T>(
   });
   const searchText = ref<string>('');
 
-  const debounceSearch = debounce(searchItems, 500);
+  const debounceSearch = _.debounce(searchItems, 500);
 
   async function fetchItems() {
     const result = await $fetch<{ data: T[]; info: { totalCount: number } }>(
