@@ -22,11 +22,12 @@ export interface INovaPoshtaAPISearch<T> {
   loading: boolean;
   search(searchKeyword: string): Promise<void>;
   loadMore(): Promise<void>;
+  reset(): void;
 }
 
 export interface INPData {
-  city?: ICity;
-  warehouse?: ICityWarehouse;
-  phone?: string;
-  name?: string;
+  city?: ICity | null;
+  warehouse?: ICityWarehouse | null;
+  phone?: string | null;
+  name?: string | null;
 }

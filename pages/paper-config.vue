@@ -1,10 +1,17 @@
 <script setup lang="ts">
+import type { INPData } from '~/models/novaposhta';
 import type { IPage } from '~/models/pagination';
 import type { IStickerPaper, IStickerCartItem } from '~/models/stickers';
 
 const router = useRouter();
 
 const cart = useState<Array<IStickerCartItem>>('cart', () => []);
+const npData = ref<INPData>({
+  phone: '',
+  name: '',
+  city: undefined,
+  warehouse: undefined,
+});
 
 const { data: stickerPapers } = await useFetch<IPage<IStickerPaper>>(
   `${apiUrl}/stickers/papers/?per_page=100`,
@@ -30,6 +37,10 @@ onMounted(
 
 function getStickerPaperByName(name: string): IStickerPaper | undefined {
   return stickerPapers.value?.items.find((paper) => paper.name === name);
+}
+
+function isDeliverySelected(): boolean {
+  return !!npData.value.city && !!npData.value.warehouse && !!npData.value.phone && !!npData.value.name;
 }
 
 const orderSumPrice = computed(() => {
@@ -96,11 +107,11 @@ async function createOrder() {
         />
       </div>
       <h2 class="mt-8">Доставка</h2>
-      <NovaposhtaDeliverySelect />
+      <NovaposhtaDeliverySelect v-model:np-data="npData" />
     </div>
     <tg-back-button @click="router.push('/stickers')" />
     <tg-main-button
-      v-if="orderSumPrice > 0"
+      v-if="orderSumPrice > 0 && isDeliverySelected()"
       :text="`Підтвердити замовлення (${orderSumPrice} грн.)`"
       @click="createOrder"
     />

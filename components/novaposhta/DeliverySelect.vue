@@ -1,15 +1,17 @@
 <script setup lang="ts">
-import type { ICity, ICityWarehouse } from '~/models/novaposhta';
+import type { ICity, ICityWarehouse, INPData } from '~/models/novaposhta';
 import { getWebAppInitData } from '~/utils/apiUrl';
 
 
-export interface Props {}
+export interface Props {
+  npData: INPData;
+}
 export interface Emits {
-  (event: 'select'): void;
+  (event: 'update:npData', value: INPData): void;
 }
 
 defineProps<Props>();
-defineEmits<Emits>();
+const emits = defineEmits<Emits>();
 
 const citiesSearch = useNovaPoshtaAPISearch<ICity>('Address', 'getCities');
 const postOfficesMethodProperties = computed(() => ({
@@ -25,6 +27,20 @@ const phone = ref<string>('');
 const name = ref<string>('');
 const city = ref<ICity | null>(null);
 const postOffice = ref<ICityWarehouse | null>(null);
+
+watch(city, () => {
+  postOffice.value = null;
+  postOfficesSearch.reset();
+});
+
+watchEffect(() => {
+  emits('update:npData', {
+    phone: phone.value,
+    name: name.value,
+    city: city.value,
+    warehouse: postOffice.value,
+  });
+});
 
 async function intersectCities(isIntersecting: boolean) {
   if (isIntersecting) await citiesSearch.loadMore();
@@ -65,7 +81,7 @@ async function createOrder() {
         return-object
         clearable
         :menu-props="{
-          maxHeight: 100,
+          maxHeight: 120,
         }"
         @update:search="citiesSearch.search"
       >

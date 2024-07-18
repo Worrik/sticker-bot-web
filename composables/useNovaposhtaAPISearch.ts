@@ -78,10 +78,17 @@ export function useNovaPoshtaAPISearch<T>(
     }
   }
 
+  function reset() {
+    items.value = [];
+    paginator.value.page = 0;
+    paginator.value.hasNext = true;
+  }
+
   return reactive({
     items,
     loading,
     search,
     loadMore,
+    reset,
   });
 }
