@@ -101,6 +101,7 @@ async function createOrder() {
         variant="tonal"
         class="mt-4"
       ></v-alert>
+      <NovaposhtaDeliverySelect />
     </div>
     <tg-back-button @click="router.push('/stickers')" />
     <tg-main-button
