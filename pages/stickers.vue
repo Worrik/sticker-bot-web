@@ -192,7 +192,9 @@ async function goToPaperConfig() {
         </v-infinite-scroll>
       </div>
     </v-main>
-    <tg-main-button v-if="stickersCount > 0" text="Далі" @click="goToPaperConfig" />
+    <client-only>
+      <tg-main-button v-if="stickersCount > 0" text="Далі" @click="goToPaperConfig" />
+    </client-only>
   </div>
 </template>
 
