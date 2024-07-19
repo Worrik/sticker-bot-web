@@ -18,16 +18,6 @@ const { data: stickerPapers } = await useFetch<IPage<IStickerPaper>>(
   `${apiUrl}/stickers/papers/?per_page=100`
 );
 
-const { data: lastDelivery } = await useFetch<{
-  city: string | null;
-  warehouse: string | null;
-  phone: string | null;
-  name: string | null;
-}>(
-  `${apiUrl}/orders/last-delivery/`,
-  { headers: { Authorization: getWebAppInitData() } }
-);
-
 async function getCityByRef(ref_value: string): Promise<ICity | null> {
   const result = await $fetch<{ data: ICity[]; info: { totalCount: number } }>(
     'https://api.novaposhta.ua/v2.0/json/',
@@ -71,6 +61,13 @@ onMounted(async () => {
         });
       return stickerItem;
     });
+
+  const { data: lastDelivery } = await useFetch<{
+    city: string | null;
+    warehouse: string | null;
+    phone: string | null;
+    name: string | null;
+  }>(`${apiUrl}/orders/last-delivery/`, { headers: { Authorization: getWebAppInitData() } });
   if (lastDelivery.value) {
     const city = await getCityByRef(lastDelivery.value.city!);
     const warehouse = await getWarehouseByRef(lastDelivery.value.warehouse!);
