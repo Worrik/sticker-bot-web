@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { ICity, ICityWarehouse, INPData } from '~/models/novaposhta';
-import { getWebAppInitData } from '~/utils/apiUrl';
 
 export interface Props {
   npData: INPData;
