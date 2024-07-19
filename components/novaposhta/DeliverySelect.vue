@@ -32,6 +32,9 @@ watch(
   () => localNpData.value.city,
   () => {
     if (localNpData.value.city?.Ref === localNpData.value.warehouse?.CityRef) return;
+    console.log({
+      local: localNpData.value,
+    });
     localNpData.value.warehouse = null;
     postOfficesSearch.reset();
   }
