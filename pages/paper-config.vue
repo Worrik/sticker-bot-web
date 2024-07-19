@@ -43,7 +43,7 @@ async function getWarehouseByRef(ref_value: string): Promise<ICityWarehouse | nu
         apiKey: '',
         modelName: 'Address',
         calledMethod: 'getWarehouses',
-        methodProperties: { CityRef: ref_value },
+        methodProperties: { Ref: ref_value },
       },
     }
   );
