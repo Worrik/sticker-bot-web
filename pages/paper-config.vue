@@ -115,7 +115,7 @@ watch(
           Weight: '0.2',
           ServiceType: 'WarehouseWarehouse',
           Cost: '50',
-          CargoType: 'Cargo',
+          CargoType: 'Documents',
           SeatsAmount: '1',
           PackCount: '1',
           PackRef: '0b39fcdc-45e3-11e7-80c8-005056887b8d',
