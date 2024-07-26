@@ -12,11 +12,16 @@ export interface Emits {
 const props = defineProps<Props>();
 const emits = defineEmits<Emits>();
 
-async function getDeliveryInfo(): Promise<string> {
-  if (!props.order.warehouse) return '';
-  const warehouse = await getWarehouseByRef(props.order.warehouse);
-  return warehouse ? `${warehouse.CityDescription}, ${warehouse.Description}` : '';
-}
+const deliveryInfo = ref<string>('');
+
+watch(
+  () => props.order.warehouse,
+  async () => {
+    if (!props.order.warehouse) return '';
+    const warehouse = await getWarehouseByRef(props.order.warehouse);
+    return warehouse ? `${warehouse.CityDescription}, ${warehouse.Description}` : '';
+  }
+);
 </script>
 
 <template>
@@ -28,7 +33,7 @@ async function getDeliveryInfo(): Promise<string> {
       <v-card-text>
         <div>Ім'я: {{ order.name }}</div>
         <div>Телефон: {{ order.phone }}</div>
-        <div>Доставка: {{ getDeliveryInfo() }}</div>
+        <div>Доставка: {{ deliveryInfo }}</div>
       </v-card-text>
       <v-card-actions>
         <v-btn class="ms-auto" text="Ok" @click="emits('close')" />
