@@ -25,7 +25,7 @@ function formatDate(date: string) {
 
 <template>
   <v-main>
-    <div class="d-flex ga-4 pa-4">
+    <div class="d-flex ga-4 pa-4 flex-column">
       <v-card v-for="order in ordersDataProvider.items" :key="order.id">
         <v-card-text>
           <div>ID: {{ order.id }}</div>
