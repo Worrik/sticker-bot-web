@@ -32,6 +32,9 @@ function formatDate(date: string) {
           <div>{{ formatDate(order.created_at) }}</div>
           <div>Статус: {{ order.status }}</div>
         </v-card-text>
+        <v-card-actions>
+          <v-btn color="primary">Деталі</v-btn>
+        </v-card-actions>
       </v-card>
     </div>
     <v-infinite-scroll @load="load">
