@@ -2,6 +2,9 @@
 import type { IPage, IPaginator } from '~/models/pagination';
 import type { IOrder } from '~/models/orders';
 
+const dialog = ref<boolean>(false);
+const dialogOrder = ref<IOrder | null>(null);
+
 const ordersDataProvider = useGenericPaginatedDataProvider<IOrder>({
   fetchItems: async (paginator: IPaginator) => {
     return await $fetch<IPage<IOrder>>(
@@ -21,6 +24,11 @@ async function load({ done }: { done: (status: 'ok' | 'error' | 'empty') => void
 function formatDate(date: string) {
   return new Date(date).toLocaleString();
 }
+
+function openOrderDialog(order: IOrder) {
+  dialogOrder.value = order;
+  dialog.value = true;
+}
 </script>
 
 <template>
@@ -37,6 +45,7 @@ function formatDate(date: string) {
         </v-card-actions>
       </v-card>
     </div>
+    <OrdersOrderDialog v-model="dialog" :order="dialogOrder" />
     <v-infinite-scroll @load="load">
       <template #empty>
         <div class="pa-2"></div>

@@ -18,38 +18,6 @@ const { data: stickerPapers } = await useFetch<IPage<IStickerPaper>>(
   `${apiUrl}/stickers/papers/?per_page=100`
 );
 
-async function getCityByRef(ref_value: string): Promise<ICity | null> {
-  const result = await $fetch<{ data: ICity[]; info: { totalCount: number } }>(
-    'https://api.novaposhta.ua/v2.0/json/',
-    {
-      method: 'POST',
-      body: {
-        apiKey: '',
-        modelName: 'Address',
-        calledMethod: 'getCities',
-        methodProperties: { Ref: ref_value },
-      },
-    }
-  );
-  return result.data[0];
-}
-
-async function getWarehouseByRef(ref_value: string): Promise<ICityWarehouse | null> {
-  const result = await $fetch<{ data: ICityWarehouse[]; info: { totalCount: number } }>(
-    'https://api.novaposhta.ua/v2.0/json/',
-    {
-      method: 'POST',
-      body: {
-        apiKey: '',
-        modelName: 'Address',
-        calledMethod: 'getWarehouses',
-        methodProperties: { Ref: ref_value },
-      },
-    }
-  );
-  return result.data[0];
-}
-
 onMounted(async () => {
   await nextTick();
   if (stickerPapers.value?.items.length)
