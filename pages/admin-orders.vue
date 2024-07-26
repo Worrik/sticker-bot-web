@@ -24,14 +24,16 @@ function formatDate(date: string) {
 </script>
 
 <template>
-  <v-main class="ga-4">
-    <v-card v-for="order in ordersDataProvider.items" :key="order.id">
-      <v-card-text>
-        <div>ID: {{ order.id }}</div>
-        <div>{{ formatDate(order.created_at) }}</div>
-        <div>Статус: {{ order.status }}</div>
-      </v-card-text>
-    </v-card>
+  <v-main>
+    <div class="d-flex ga-4 pa-4">
+      <v-card v-for="order in ordersDataProvider.items" :key="order.id">
+        <v-card-text>
+          <div>ID: {{ order.id }}</div>
+          <div>{{ formatDate(order.created_at) }}</div>
+          <div>Статус: {{ order.status }}</div>
+        </v-card-text>
+      </v-card>
+    </div>
     <v-infinite-scroll @load="load">
       <template #empty>
         <div class="pa-2"></div>
