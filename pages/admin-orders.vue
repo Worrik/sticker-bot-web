@@ -17,15 +17,21 @@ async function load({ done }: { done: (status: 'ok' | 'error' | 'empty') => void
   else if (ordersDataProvider.paginator.hasNext) done('ok');
   else done('empty');
 }
+
+function formatDate(date: string) {
+  return new Date(date).toLocaleString();
+}
 </script>
 
 <template>
   <div>
-    <div v-for="order in ordersDataProvider.items" :key="order.id">
-      <div>{{ order.id }}</div>
-      <div>{{ order.status }}</div>
-      <div>{{ order.created_at }}</div>
-    </div>
+    <v-card v-for="order in ordersDataProvider.items" :key="order.id">
+      <v-card-text>
+        <div>ID: {{ order.id }}</div>
+        <div>{{ formatDate(order.created_at) }}</div>
+        <div>Статус: {{ order.status }}</div>
+      </v-card-text>
+    </v-card>
     <v-infinite-scroll @load="load">
       <template #empty>
         <div class="pa-2"></div>
