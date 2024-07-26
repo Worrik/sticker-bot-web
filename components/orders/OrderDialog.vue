@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { ICityWarehouse } from '~/models/novaposhta';
 import type { IOrder } from '~/models/orders';
 
 export interface Props {
@@ -13,7 +12,7 @@ export interface Emits {
 const props = defineProps<Props>();
 const emits = defineEmits<Emits>();
 
-async function getDeliveryInfo(): string {
+async function getDeliveryInfo(): Promise<string> {
   if (!props.order.warehouse) return '';
   const warehouse = await getWarehouseByRef(props.order.warehouse);
   return warehouse ? `${warehouse.CityDescription}, ${warehouse.Description}` : '';

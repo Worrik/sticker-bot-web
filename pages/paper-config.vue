@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ICity, ICityWarehouse, INPData } from '~/models/novaposhta';
+import type { INPData } from '~/models/novaposhta';
 import type { IPage } from '~/models/pagination';
 import type { IStickerPaper, IStickerCartItem } from '~/models/stickers';
 
@@ -90,7 +90,7 @@ watch(
         },
       },
     });
-    deliveryPrice.value = result.data[0].Cost + 5;
+    deliveryPrice.value = result.data[0].Cost;
   },
   { deep: true }
 );

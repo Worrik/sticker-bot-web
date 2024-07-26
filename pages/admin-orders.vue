@@ -41,11 +41,11 @@ function openOrderDialog(order: IOrder) {
           <div>Статус: {{ order.status }}</div>
         </v-card-text>
         <v-card-actions>
-          <v-btn color="primary">Деталі</v-btn>
+          <v-btn color="primary" @click="openOrderDialog(order)">Деталі</v-btn>
         </v-card-actions>
       </v-card>
     </div>
-    <OrdersOrderDialog v-model="dialog" :order="dialogOrder" />
+    <OrdersOrderDialog v-if="dialogOrder" v-model="dialog" :order="dialogOrder" />
     <v-infinite-scroll @load="load">
       <template #empty>
         <div class="pa-2"></div>
