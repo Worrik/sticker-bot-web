@@ -24,7 +24,7 @@ function formatDate(date: string) {
 </script>
 
 <template>
-  <div>
+  <v-main class="ga-4">
     <v-card v-for="order in ordersDataProvider.items" :key="order.id">
       <v-card-text>
         <div>ID: {{ order.id }}</div>
@@ -40,5 +40,5 @@ function formatDate(date: string) {
         <div class="pa-2"></div>
       </template>
     </v-infinite-scroll>
-  </div>
+  </v-main>
 </template>
