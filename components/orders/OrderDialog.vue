@@ -17,9 +17,12 @@ const deliveryInfo = ref<string>('');
 watch(
   () => props.order.warehouse,
   async () => {
-    if (!props.order.warehouse) return '';
+    if (!props.order.warehouse) {
+      deliveryInfo.value = '';
+      return;
+    }
     const warehouse = await getWarehouseByRef(props.order.warehouse);
-    return warehouse ? `${warehouse.CityDescription}, ${warehouse.Description}` : '';
+    deliveryInfo.value = warehouse ? `${warehouse.CityDescription}, ${warehouse.Description}` : '';
   }
 );
 </script>
