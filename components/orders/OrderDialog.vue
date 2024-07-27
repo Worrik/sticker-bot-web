@@ -36,7 +36,7 @@ watch(
         <div>Доставка: {{ deliveryInfo }}</div>
       </v-card-text>
       <v-card-actions>
-        <v-btn class="ms-auto" text="Ok" @click="emits('close')" />
+        <v-btn class="ms-auto" text="Close" @click="emits('close')" />
       </v-card-actions>
     </v-card>
   </v-dialog>

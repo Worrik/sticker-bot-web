@@ -38,6 +38,8 @@ function openOrderDialog(order: IOrder) {
         <v-card-text>
           <div>ID: {{ order.id }}</div>
           <div>{{ formatDate(order.created_at) }}</div>
+          <div>Ім'я: {{ order.name }}</div>
+          <div>Телефон: {{ order.phone }}</div>
           <div>Статус: {{ order.status }}</div>
         </v-card-text>
         <v-card-actions>
@@ -45,7 +47,12 @@ function openOrderDialog(order: IOrder) {
         </v-card-actions>
       </v-card>
     </div>
-    <OrdersOrderDialog v-if="dialogOrder" v-model="dialog" :order="dialogOrder" />
+    <OrdersOrderDialog
+      v-if="dialogOrder"
+      v-model="dialog"
+      :order="dialogOrder"
+      @close="dialog = false"
+    />
     <v-infinite-scroll @load="load">
       <template #empty>
         <div class="pa-2"></div>
