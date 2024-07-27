@@ -44,6 +44,7 @@ function openOrderDialog(order: IOrder) {
         </v-card-text>
         <v-card-actions>
           <v-btn color="primary" @click="openOrderDialog(order)">Деталі</v-btn>
+          <v-btn :href="order.url">Посилання</v-btn>
         </v-card-actions>
       </v-card>
     </div>
