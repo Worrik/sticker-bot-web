@@ -35,13 +35,12 @@ watchEffect(async () => {
         <div>Телефон: {{ order.phone }}</div>
         <div>Доставка: {{ deliveryInfo }}</div>
         <v-divider class="my-4" />
-        <v-card
+        <div
           v-for="sticker in order.stickers"
           :key="sticker.sticker.id"
           class="d-flex flex-row pa-1 ga-2"
-          variant="elevated"
         >
-          <div :style="{ width: '30vw', height: '30vw' }" class="pa-1">
+          <div :style="{ width: '30vw' }" class="pa-1">
             <v-img class="sticker-img" :src="sticker.sticker.url"></v-img>
           </div>
           <v-divider vertical></v-divider>
@@ -53,13 +52,6 @@ watchEffect(async () => {
             >
               <div>{{ option.paper }}: {{ option.quantity }}</div>
             </div>
-          </div>
-        </v-card>
-        <div class="d-flex" v-for="sticker in order.stickers" :key="sticker.sticker.id">
-          <v-img :src="sticker.sticker.url" width="100" height="100" />
-          <div v-for="option in sticker.options" :key="option.paper">
-            <div>Папір: {{ option.paper }}</div>
-            <div>Кількість: {{ option.quantity }}</div>
           </div>
         </div>
       </v-card-text>
