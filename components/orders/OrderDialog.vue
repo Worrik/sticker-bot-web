@@ -14,18 +14,15 @@ const emits = defineEmits<Emits>();
 
 const deliveryInfo = ref<string>('');
 
-watch(
-  () => props.order.warehouse,
-  async () => {
-    if (!props.order.warehouse) {
-      deliveryInfo.value = '';
-      return;
-    }
-    const warehouse = await getWarehouseByRef(props.order.warehouse);
-    deliveryInfo.value = warehouse ? `${warehouse.CityDescription}, ${warehouse.Description}` : '';
-    console.log('here', deliveryInfo.value);
+watchEffect(async () => {
+  if (!props.order.warehouse) {
+    deliveryInfo.value = '';
+    return;
   }
-);
+  const warehouse = await getWarehouseByRef(props.order.warehouse);
+  deliveryInfo.value = warehouse ? `${warehouse.CityDescription}, ${warehouse.Description}` : '';
+  console.log('here', deliveryInfo.value);
+});
 </script>
 
 <template>
