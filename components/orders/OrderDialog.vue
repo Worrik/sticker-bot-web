@@ -23,6 +23,7 @@ watch(
     }
     const warehouse = await getWarehouseByRef(props.order.warehouse);
     deliveryInfo.value = warehouse ? `${warehouse.CityDescription}, ${warehouse.Description}` : '';
+    console.log('here', deliveryInfo.value);
   }
 );
 </script>
