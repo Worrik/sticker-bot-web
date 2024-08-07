@@ -101,7 +101,7 @@ async function goToPaperConfig() {
 <template>
   <div>
     <v-app-bar>
-      <v-app-bar-title>Обери стікери</v-app-bar-title>
+      <v-app-bar-title>Оберіть стікери</v-app-bar-title>
       <v-progress-linear
         :model-value="progress"
         :active="loading"
